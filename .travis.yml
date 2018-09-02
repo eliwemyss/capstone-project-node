@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: FY24RAmYf48jyCopvvDnu+eV++83EZ3bzIPDGvU139nky2WYKTTGMsXp/onp+9/xFeiYf11FhNZm9YmoZgsXon+bIRSnTsdb4KEj8lh/jZM37dV7Ma+bj2W0Xn1FBYXN8sppVTfyVGyTdeLirzdmaw25EcyU/f2vlLCvY+dwJ7YtIIZpm86/VkhcB70cQNTt9iBJaXsRVkxDvOGN9zSUigMDRrbzitwcVUzlPU5qrS1vWVXbaU+84S198kkRlPlzoHkmpqhmhwhwEL4yohLFJWteCM5F3GdSdhS7c6+oCmqPjGa1GCTbCuNFVpwYBvFA0k5vHBqrD2EE6Cr73Wv8FWnUmBKYzMKDzJq34TqGPOBk7v1MtQmKbnWA1+AhtswXPfIkH+DRoHtMXDP6mwM5HvgWMWy/p0Uzxy9m3Js0iYvUWO2Ni8cUvp0SKOQuEu5kfY5ziAs0NBWMbX5Jse24Ra5EWBfxXhglgXwCUwyAfM3BPAAPDrCXVYTQ8PcmIvAs08UCOFHzstUYp4z5CFUCkH6saZGSMpo8hHLFOmFM1cUkjzIDpalNPJFEJGTOXNVM235Q95TBwcOcYQQtCV6eRRZuraRWX0LOsS5WCpS+/C17sAujrgaZ1EA0wn9ZiWFIXxlbUd58FlJLysxqVNijYtSK+Em/IaxxhNaucGY3SH8=
+  app: safe-river-93282
+  on: 
+    repo: eliwemyss/capstone-project-node
