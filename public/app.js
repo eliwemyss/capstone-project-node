@@ -31,7 +31,8 @@ function getScoreUpdates(callback) {
 function displayScores(data) {
 	for (index in data.scores) {
 		$('body').append(
-			'<p>' + 'data.scores[index].text' + '</p>');
+			`<p>${data}</p>`);
+		console.log(data.scores[index])
 	}
 }
 
