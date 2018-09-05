@@ -9,7 +9,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('index', function() {
-	it('exists', function(){
+	it('should respond with status 200', function(){
 		return chai
 			.request(app)
 			.get('/')
