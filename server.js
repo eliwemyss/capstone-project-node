@@ -3,6 +3,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 mongoose.Promise = global.Promise;
 
@@ -10,17 +11,15 @@ const { PORT, DATABASE_URL } = require('./config');
 const { Scores } = require('./models/scores');
 
 const app = express();
+
 app.use(express.static("public"));
+app.use(morgan('common'));
 app.use(express.json());
 
-app.get('/', function(req, res) {
-	res.send('please use /api/scores')
-});
 	
 app.get('/api/scores', function(req, res) {
 	Scores
 		.find()
-		.limit(20)
 		.then(scores => {
 			res.json({
 				scores: scores.map(
@@ -72,4 +71,4 @@ if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
-module.exports = { app, runServer, closeServer };
+module.exports = { runServer, app, closeServer };
