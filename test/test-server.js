@@ -21,7 +21,8 @@ function tearDownDb() {
 }
 
 describe('API', function() {
-	before(function() {
+	before(function(done) {
+		this.enableTimeouts(false)
 		return runServer(TEST_DATABASE_URL)
 	});
 	after(function() {
