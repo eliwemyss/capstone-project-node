@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "fantasydata-node-client": "^1.1.0",
     "mongoose": "^5.2.14",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.4",

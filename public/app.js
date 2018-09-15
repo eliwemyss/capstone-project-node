@@ -1,4 +1,15 @@
 
+var schedule = {
+  "url": "https://api.fantasydata.net/v3/cfb/stats/json/Games/2018?key=80dbc7beb0db44ad829b53b0193a5bf2",
+  "method": "GET",
+}
+
+$.ajax(schedule).done(function (response) {
+  console.log(response);
+});
+
+
+
 var MOCK_SCORE_DATA = {
 	"scores": [
 		{

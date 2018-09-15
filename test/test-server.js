@@ -21,8 +21,7 @@ function tearDownDb() {
 }
 
 describe('API', function() {
-	before(function(done) {
-		this.enableTimeouts(false)
+	before(function() {
 		return runServer(TEST_DATABASE_URL)
 	});
 	after(function() {
@@ -34,7 +33,7 @@ describe('API', function() {
 			.request(app)
 			.get('/api/scores')
 			.then(function(res) {
-				expect(res).to.have.status(200)
+				expect(res).to.have.status(200);
 			})
 	})
 })
