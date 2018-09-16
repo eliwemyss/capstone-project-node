@@ -16,7 +16,8 @@ app.use(express.static("public"));
 app.use(morgan('common'));
 app.use(express.json());
 
-	
+
+
 app.get('/api/scores', function(req, res) {
 	Scores
 		.find()
@@ -30,7 +31,8 @@ app.get('/api/scores', function(req, res) {
 			console.error(err);
 			res.status(500).json({message: 'Internal server error'})
 		});
-})
+})	
+
 
 let server;
 
