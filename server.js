@@ -10,33 +10,18 @@ mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 const { Scores } = require('./models/scores');
 
+const scoreRouter  = require('./router')
 const app = express();
 
 app.use(express.static("public"));
 app.use(morgan('common'));
 app.use(express.json());
-
-
-
-app.get('/api/scores', function(req, res) {
-	Scores
-		.find()
-		.then(scores => {
-			res.json({
-				scores: scores.map(
-					(score) => score.serialize())
-			});
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'})
-		});
-})	
+app.use(scoreRouter)
 
 
 let server;
 
-function runServer(databaseUrl, port = PORT) {
+function runServer(databaseUrl = DATABASE_URL, port = PORT) {
 
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
