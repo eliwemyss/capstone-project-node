@@ -1,75 +1,84 @@
 
-var schedule = {
-  "url": "https://api.fantasydata.net/v3/cfb/stats/json/Games/2018?key=80dbc7beb0db44ad829b53b0193a5bf2",
-  "method": "GET",
+
+// var schedule = {
+//   "url": "https://api.fantasydata.net/v3/cfb/stats/json/Games/2018?key=80dbc7beb0db44ad829b53b0193a5bf2",
+//   "method": "GET",
+// }
+
+
+
+// $.ajax(schedule).done(function (response) {
+//   console.log(response);
+// });
+
+var teamInfo = {
+	'url': 'https://api.fantasydata.net/v3/cfb/scores/JSON/LeagueHierarchy?key=80dbc7beb0db44ad829b53b0193a5bf2',
+	'method': 'GET'
 }
 
-$.ajax(schedule).done(function (response) {
-  console.log(response);
-});
+function getTeamInfo(data) {
+	$.ajax({
+		type: 'GET',
+		'url': 'https://api.fantasydata.net/v3/cfb/scores/JSON/LeagueHierarchy?key=80dbc7beb0db44ad829b53b0193a5bf2',
+		success: function(teams) {
+			console.log(teams)
+		} 
+	})
+}
 
 
 
-var MOCK_SCORE_DATA = {
-	"scores": [
-		{
-			"id": "111111",
-			"home": "Tennessee",
-			"away": "ETSU",
-			"home_score": "63",
-			"away_score": "7"
-		},
-		{
-			"id": "222222",
-			"home": "South Carolina",
-			"away": "Georgia",
-			"home_score": "31",
-			"away_score": "34"
-		},
-		{
-			"id": "333333",
-			"home": "Florida",
-			"away": "Kentucky",
-			"home_score": "41",
-			"away_score": "20"
-		},
-		{
-			"id": "444444",
-			"home": "Vanderbilt",
-			"away": "Nevada",
-			"home_score": "49",
-			"away_score": "6"
-		},
-		{
-			"id": "555555",
-			"home": "Missouri",
-			"away": "Wyoming",
-			"home_score": "45",
-			"away_score": "14"
+// // function displayScores(data) {
+// 	for (var i = 0; i < data.scores.length; i++) {
+// 		$('.scores').append(
+// 			`<p>${data.scores[i].away} ${data.scores[i].away_score} ${data.scores[i].home} ${data.scores[i].home_score}</p>
+// 			`);
+// 		console.log(data.scores[i])
+// 	}
+// }
+
+
+
+
+// 	getAndDisplayScores();
+// })
+
+// $(function(scores) {
+// 	var $scores =$('.scores');
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: '/api/scores',
+// 		success: function(score) {
+// 			console.log(score.scores[0])
+// 		}
+// 	});
+// })
+
+
+function getGameData(data) {
+	$.ajax({
+		type: 'GET',
+		url: '/api/scores',
+		success: function(data) {
+			console.log(data.scores)
+			let gameData = displayMatchups(data)
+			$('.score-form').html(gameData)
 		}
-	]
-};
-
-function getScoreUpdates(callback) {
-  setTimeout(function() {
-    callback(MOCK_SCORE_DATA)
-  }, 100)
+	});
 }
 
-function displayScores(data) {
-	for (var i = 0; i < data.scores.length; i++) {
-		$('.scores').append(
-			`<p>${data.scores[i].away} ${data.scores[i].away_score} ${data.scores[i].home} ${data.scores[i].home_score}</p>
-			`);
-		console.log(data.scores[i])
+function displayMatchups(data) {
+	var results = ''
+
+	// for(var i = 0; i < data.scores.length; i++) {
+		results = `
+		<span>${data.scores[257].AwayTeamName} </span><input type="text" name="score away" class="score-away">
+		<span>${data.scores[257].HomeTeamName}</span><input type="text" name="score home" class="score-home">
+		<button class="submit">Submit</button>
+		`
+	return results
 	}
-}
 
-function getAndDisplayScores() {
-	getScoreUpdates(displayScores);
-}
-
-$(function() {
 $('.score-form').submit(function(event) {
   event.preventDefault();
   const away = $('.score-away').val();
@@ -78,11 +87,30 @@ $('.score-form').submit(function(event) {
   $('.score-home').val('')
 
   $('.scores').append(
-`<p>Away ${away} Home ${home}</p>`)
-  console.log(home)
+`<p>${away} ${home}</p>`)
 });
 
-	getAndDisplayScores();
+function getGameWeek(week) {
+	$.ajax({
+		type: 'GET',
+		url: 'api/scores/week/4',
+		success: function(week) {
+			console.log(week)
+		}
+	})
+}
+
+
+let dropdown = $('#week');
+dropdown.empty();
+
+dropdown.append('<option selected ="true" disabled> Choose Week</option>')
+dropdown.prop('selectedIndex', 0);
+let week = 0;
+let WEEK_URL = '/api/scores/week/{week}'
+
+$.getJSON(WEEK_URL, function(data) {
+	$.each(data, function(key, entry) {
+		dropdown.append($('<option></option').attr('value').text(entry.name));
+	})
 })
-
-

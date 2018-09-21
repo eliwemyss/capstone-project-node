@@ -3,32 +3,41 @@ var mongoose = require('mongoose');
 // Score Schema
 
 var scoreSchema = mongoose.Schema({
-	awayTeamName:{
+	AwayTeamName:{
 		type: String,
 		required: true
 	},
-	homeTeamName:{
+	HomeTeamName:{
 		type: String,
 		required: true
 	},
-	awayTeamScore:{
+	AwayTeamScore:{
 		type: String,
 	},
-	homeTeamScore:{
+	HomeTeamScore:{
 		type: String
 	},
-	week:{
-		type: String
+	"AwayTeamID":{
+		type: Number
+	},
+	"HomeTeamID":{
+		type: Number
+	},
+	Week:{
+		type: Number
 	}
 })
 
 scoreSchema.methods.serialize = function() {
 	return {
 		id: this._id,
-		awayTeamName: this.awayTeamName,
-		homeTeamName: this.homeTeamName,
-		awayTeamScore: this.awayTeamScore,
-		homeTeamScore: this.homeTeamScore
+		AwayTeamName: this.AwayTeamName,
+		HomeTeamName: this.HomeTeamName,
+		AwayTeamScore: this.AwayTeamScore,
+		HomeTeamScore: this.HomeTeamScore,
+		AwayTeamID: this.AwayTeamID,
+		HomeTeamID: this.HomeTeamID,
+		Week: this.Week
 	}
 }
 

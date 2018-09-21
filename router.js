@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 
-// Scores.create('Tennessee -- Florida, 28 -- 24')
+
 
 router.get('/api/scores', function(req, res) {
 	Scores
@@ -30,15 +30,54 @@ router.get('/api/scores', function(req, res) {
 router.get('/api/scores/:id', function(req, res) {
 	Scores
 		.findById(req.params.id)
-		.then(post => res.json(post.serialize()))
+		.then(scores => res.json(scores.serialize()))
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({ error: 'something not working'})
 		});
 });
 
+router.get('/api/scores/week/:id', function(req, res) {
+	
+	Scores
+		.find({ 'Week': req.params.id})
+		.then(scores => {
+			res.json({
+				scores: scores.map(
+					(score) => score.serialize())
+			})
+		})
+		.catch(err => {
+			
+
+			res.status(500).json({ error: 'something not working', params: req.params.Week, p: err})
+		});
+
+});
+
+router.get('/api/scores/teams/:id', function(req, res) {
+	
+	Scores
+		.find({ 
+			'HomeTeamID': req.params.id
+		})
+		.then(scores => {
+			res.json({
+				scores: scores.map(
+					(score) => score.serialize())
+			})
+		})
+		.catch(err => {
+			
+
+			res.status(500).json({ error: 'something not working', params: req.params.Week, p: err})
+		});
+
+});
+
+
 router.post('/api/scores', function(req, res) {
-	const requiredFields = ['awayTeamName', 'homeTeamName', 'awayTeamScore', 'homeTeamScore', 'week']
+	const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week']
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if(!(field in req.body)) {
@@ -50,11 +89,11 @@ router.post('/api/scores', function(req, res) {
 
 	Scores
 		.create({
-			awayTeamName: req.body.awayTeamName,
-			homeTeamName: req.body.homeTeamName,
-			awayTeamScore: req.body.awayTeamScore,
-			homeTeamScore: req.body.homeTeamScore,
-			week: req.body.week
+			AwayTeamName: req.body.AwayTeamName,
+			HomeTeamName: req.body.HomeTeamName,
+			AwayTeamScore: req.body.AwayTeamScore,
+			HomeTeamScore: req.body.HomeTeamScore,
+			Week: req.body.Week
 		})
 		.then(scores => res.status(201).json(scores.serialize()))
 		.catch(err => {
@@ -70,14 +109,14 @@ router.put('/api/scores/:id', function(req, res) {
 		});
 	}
 	const updated = {};
-	const updateableFields = [ 'awayTeamName', 'homeTeamName', 'awayTeamScore', 'homeTeamScore', 'week'];
+	const updateableFields = [ 'AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week'];
 	updateableFields.forEach(field => {
 		if (field in req.body){
 			updated[field] = req.body[field];
 		}
 	});
 	Scores
-		.findByIdAndUpdate(req.params.id, { $set: updates }, { new: true })
+		.findOneAndUpdate(req.params.id, { $set: updated }, { new: true })
 		.then(updatedScore => res.status(204).end())
 		.catch(err => res.status(500).json({ message: 'Something went wrong' }))
 });
@@ -95,7 +134,14 @@ router.use('*' , function(req, res) {
 	res.status(404).json({ message: 'Not found' });
 });
 
-
+	// Scores
+	// 	.find(req.params.Week)
+	// 	.then(post => res.json(post.serialize()))
+	// 	console.log(req.params)
+	// 	.catch(err => {
+	// 		console.error(err);
+	// 		res.status(500).json({ error: 'something not working'})
+	// });
 
 module.exports = router;
 
