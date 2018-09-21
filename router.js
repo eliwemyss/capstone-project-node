@@ -134,14 +134,7 @@ router.use('*' , function(req, res) {
 	res.status(404).json({ message: 'Not found' });
 });
 
-	// Scores
-	// 	.find(req.params.Week)
-	// 	.then(post => res.json(post.serialize()))
-	// 	console.log(req.params)
-	// 	.catch(err => {
-	// 		console.error(err);
-	// 		res.status(500).json({ error: 'something not working'})
-	// });
+
 
 module.exports = router;
 
