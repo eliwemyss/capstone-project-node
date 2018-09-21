@@ -103,20 +103,20 @@ router.post('/api/scores', function(req, res) {
 });
 
 router.put('/api/scores/:id', function(req, res) {
-	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+	if(req.params.id  === req.body.id) {
 		res.status(400).json({
 			error: 'Request path id and request body id values must match'
 		});
 	}
 	const updated = {};
-	const updateableFields = [ 'AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week'];
+	const updateableFields = ['AwayTeamScore', 'HomeTeamScore'];
 	updateableFields.forEach(field => {
 		if (field in req.body){
 			updated[field] = req.body[field];
 		}
 	});
 	Scores
-		.findOneAndUpdate(req.params.id, { $set: updated }, { new: true })
+		.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
 		.then(updatedScore => res.status(204).end())
 		.catch(err => res.status(500).json({ message: 'Something went wrong' }))
 });
