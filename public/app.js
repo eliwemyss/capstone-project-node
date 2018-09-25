@@ -102,5 +102,4 @@ function getGameWeek(week) {
 }
 
 getGameData();
-getGameWeek()
 

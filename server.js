@@ -4,16 +4,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-// const passport = require('passport');
+const passport = require('passport');
 
 mongoose.Promise = global.Promise;
 
-const { PORT, DATABASE_URL } = require('./config');
+const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 const { Scores } = require('./models/scores');
-// const { Users } = require('./models/users')
+const { Users } = require('./models/users')
 
-const scoreRouter   = require('./router')
-// const { userRouter } = require('./user/user-router');
+const scoreRouter  = require('./router')
+const userRouter = require('./user/user-router');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(morgan('common'));
 app.use(express.json());
 
 app.use(scoreRouter);
-// app.use(userRouter);
+app.use(userRouter);
 
 
 let server;
