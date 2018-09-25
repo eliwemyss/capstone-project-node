@@ -81,7 +81,7 @@ router.post('/api/scores', function(req, res) {
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if(!(field in req.body)) {
-			const message = `Missing \`${field}\` in request body`;
+			const message = `Missing \`${field}\` in request body....`;
 			console.error(message);
 			return res.status(400).send(message);
 		}
@@ -109,7 +109,7 @@ router.put('/api/scores/:id', function(req, res) {
 		});
 	}
 	const updated = {};
-	const updateableFields = ['AwayTeamScore', 'HomeTeamScore'];
+	const updateableFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore'];
 	updateableFields.forEach(field => {
 		if (field in req.body){
 			updated[field] = req.body[field];
