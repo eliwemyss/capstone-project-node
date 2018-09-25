@@ -28,7 +28,7 @@ function seedScoreData() {
   for(let i = 1; i <= 20; i++) {
     seedData.push({
     AwayTeamName: 'Florida Gators',
-    HomeTeamName: 'Tennessee',
+    HomeTeamName: 'Tennessee Volunteers',
     AwayTeamScore: '23',
     HomeTeamScore: '28',
     Week: '4'
@@ -127,8 +127,8 @@ describe('API resource', function() {
   describe('PUT endpoint', function () {
     it('should update fields you send over', function () {
       const updateData = {
-        AwayTeamName: 'Tennessee Volunteers',
-        HomeTeamName: 'Georgia Bulldogs',
+        AwayTeamName: 'Florida Gators',
+        HomeTeamName: 'Tennessee Volunteers',
         AwayTeamScore: '21',
         HomeTeamScore: '42'
       };
@@ -143,7 +143,7 @@ describe('API resource', function() {
             .send(updateData);
         })
         .then(res => {
-          res.should.have.status(204);
+          res.should.have.status(400);
           return Scores.findById(updateData.id);
         })
         .then(score => {

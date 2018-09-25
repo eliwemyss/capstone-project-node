@@ -72,14 +72,11 @@ function displayMatchups(data) {
 
 	// for(var i = 0; i < data.scores.length; i++) {
 		results = `
-		<span>${data.scores[257].AwayTeamName} </span><input type="text" name="score away" class="score-away">
-		<span>${data.scores[257].HomeTeamName}</span><input type="text" name="score home" class="score-home">
+		<span>${data.scores[325].AwayTeamName} </span><input type="text" name="score away" class="score-away">
+		<span>${data.scores[325].HomeTeamName}</span><input type="text" name="score home" class="score-home">
 		<button class="submit">Submit</button>
 		`
-	return results
-	}
-
-$('.score-form').submit(function(event) {
+		$('.score-form').submit(function(event) {
   event.preventDefault();
   const away = $('.score-away').val();
   $('.score-away').val('')
@@ -87,8 +84,12 @@ $('.score-form').submit(function(event) {
   $('.score-home').val('')
 
   $('.scores').append(
-`<p>${away} ${home}</p>`)
+`<p>${data.scores[325].AwayTeamName} ${away} ${data.scores[325].HomeTeamName} ${home}</p>`)
 });
+	return results
+	}
+
+
 
 function getGameWeek(week) {
 	$.ajax({
@@ -100,17 +101,6 @@ function getGameWeek(week) {
 	})
 }
 
+getGameData();
+getGameWeek()
 
-let dropdown = $('#week');
-dropdown.empty();
-
-dropdown.append('<option selected ="true" disabled> Choose Week</option>')
-dropdown.prop('selectedIndex', 0);
-let week = 0;
-let WEEK_URL = '/api/scores/week/{week}'
-
-$.getJSON(WEEK_URL, function(data) {
-	$.each(data, function(key, entry) {
-		dropdown.append($('<option></option').attr('value').text(entry.name));
-	})
-})
