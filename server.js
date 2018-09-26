@@ -1,4 +1,3 @@
-
 'use strict';
 
 const express = require('express');
@@ -9,20 +8,25 @@ const passport = require('passport');
 mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
-const { Scores } = require('./models/scores');
-const { Users } = require('./models/users')
 
-const scoreRouter  = require('./router')
-const userRouter = require('./user/user-router');
+const { authRouter } = require('./user/auth-router');
+const { userRouter } = require('./user/user-router');
+const { scoreRouter }  = require('./router');
+const { localStrategy, jwtStrategy } = require('./user/auth-strategies')
+
 
 const app = express();
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 app.use(express.static("public"));
 app.use(morgan('common'));
 app.use(express.json());
 
-app.use(scoreRouter);
-app.use(userRouter);
+// app.use('/api/scores', scoreRouter);
+app.use('/api/user', userRouter);
+app.use('/api/auth', authRouter);
 
 
 let server;

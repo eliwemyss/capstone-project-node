@@ -1,19 +1,17 @@
 const express = require('express');
-
+const passport = require('passport');
 const { User } = require('../models/users');
 
 const userRouter = express.Router();
 
 userRouter.post('/', (req, res) => {
 	const newUser = {
-        name: request.body.name,
-        email: request.body.email,
-        username: request.body.username,
-        password: request.body.password
+        name: req.body.name,
+        username: req.body.username,
+        password: req.body.password
     };
     User.findOne({
     $or: [
-            { email: newUser.email },
             { username: newUser.username }
         ]
     })
@@ -33,6 +31,19 @@ userRouter.post('/', (req, res) => {
     			return res.status(500).json(err)
     		});
     });
+
+    userRouter.get('/', (req, res) => {
+        User.find()
+            .then(users => {
+                return res.status(200).json(
+                    users.map(user => user.serialize())
+                    );
+            })
+            .catch(err => {
+                return res.status(500).json(err);
+            });
+    });
+
     userRouter.get('/:userid', (req, res) => {
     	User.findById(req.params.userid)
     		.then(user => {
@@ -45,4 +56,4 @@ userRouter.post('/', (req, res) => {
 });
 
 
-module.exports = userRouter;
+module.exports = { userRouter };

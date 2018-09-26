@@ -1,89 +1,136 @@
-// 'use strict';
+const chai = require('chai');
+const chaiHttp = require('chai-http');
 
-// const chai = require('chai');
+const { app, runServer, closeServer } = require('../server');
+const { User } = require('../models/users');
+const { TEST_DATABASE_URL } = require('../config');
 
-// const chaiHttp = require('chai-http');
-// const faker = require('faker');
-// const mongoose = require('mongoose');
+const expect = chai.expect;
 
-// const {app, runServer, closeServer} = require('../server');
-// const { TEST_DATABASE_URL } = require('../config');
-// const { User } = require('../models/users')
+chai.use(chaiHttp);
 
-// const should = chai.should();
+describe('/api/users', () => {
+    const username = 'exampleUser';
+    const password = 'examplePass';
+    const name = 'User';
 
-// chai.use(chaiHttp);
 
-// describe('Tests for users', function() {
-// 	let testUser;
-// 	before(function() {
-// 		return runServer(true);
-// 	});
-// 	beforeEach(function() {
-// 		testUser = createFakeUser();
-// 		returnUser.create(testUser)
-// 			.then(() => { })
-// 			.catch(err => {
-// 				console.error(err);
-// 			});
-// 	});
-// 	afterEach(function() {
-// 		return new Promise((resolve, reject) => {
-// 			mongoose.connection.dropDatabase()
-// 				.then(result => {
-// 					resolve(result);
-// 				})
-// 				.catch(err => {
-// 					console.error(err);
-// 					reject(err);
-// 				});
-// 			});
-// 	after(function() {
-// 		return closeServer();
-// 		});
-// 	it('Should return a specfic user', function() {
-// 		let foundUser;
-// 		return chai.request(app)
-// 			.get('/api/user')
-// 			.then(res => {
-// 				res.should.have.status(200);
-//           		res.should.be.json;
-//           		res.should.be.a('array');
-//           		res.body.should.have.lengthOf.at.least(1);
-//           		foundUser = res.body[0];
-//           		return chai.request(app).get(`/api/user/${foundUser.id}`);
-// 			})
-// 			.then(res => {
-// 				res.should.have.status(200);
-// 				res.should.be.json;
-// 				res.body.should.be.a('object');
-// 				res.body.id.should.be.equal(foundUser.id);
-// 			});
-// 		});
-// 	it('Should create new user', function() {
-// 		let newUser = createFakeUser();
-// 		return chai.request(app)
-// 			.post('/api/user')
-// 			.send(newUser)
-// 			.then(res => {
-// 				res.should.have.status(200);
-// 				res.should.be.json;
-//           		res.should.be.a('array');
-//           		res.body.should.include.keys('id', 'name', 'username', 'email');
-//           		res.body.name.should.equal(newUser.name);
-//           		res.body.email.should.equal(newUser.email);
-//           		res.body.username.should.equal(newUser.username);
+    before(() => runServer(TEST_DATABASE_URL));
 
-// 			});
-// 		});
-// 	function createFakeUser() {
-// 		return {
-// 			name: `${faker.name.firstName()} ${faker.name.lastName()}`,
-//             username: `${faker.lorem.word()}${faker.random.number(100)}`,
-//             password: faker.internet.password(),
-//             email: faker.internet.email()
-// 		};
-// 	}
-// });
+    after(() => closeServer());
 
-// })
+    beforeEach(() => { });
+
+    afterEach(() => User.remove({}));
+
+    describe('/api/users', () => {
+        describe('POST', () => {
+            it('Should reject creating users with missing username', () => chai
+                .request(app)
+                .post('/api/users')
+                .send({
+                    password,
+                  	name
+                })
+                .then(() => expect.fail(null, null, 'Request should not succeed'))
+                .catch((err) => {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+
+                    const res = err.response;
+                    expect(res).to.have.status(400);
+                    expect(res).to.be.json;
+                    expect(res.body.messages[0]).to.equal('There is missing username in your request body');
+                }));
+
+            it('Should reject creating users with missing password', () => chai
+                .request(app)
+                .post('/api/users')
+                .send({
+                    username,
+                   	name
+                })
+                .then(() => expect.fail(null, null, 'Request should not succeed'))
+                .catch((err) => {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+
+                    const res = err.response;
+                    expect(res).to.have.status(400);
+                    expect(res.body.messages[0]).to.equal('There is missing password in your request body');
+                }));
+
+            it('Should reject creating users with empty username', () => chai
+                .request(app)
+                .post('/api/users')
+                .send({
+                    username: '',
+                    password,
+                  	name
+                })
+                .then(() => expect.fail(null, null, 'Request should not succeed'))
+                .catch((err) => {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+
+                    const res = err.response;
+                    expect(res).to.have.status(400);
+                    expect(res.body.messages[0]).to.equal('Path `username` is required.');
+                }));
+
+            it('Should reject creating users with duplicate username', () => User.create({
+                username,
+                password,
+            	name
+            })
+                .then(() => chai.request(app).post('/api/users').send({
+                    username,
+                    password,
+      				name
+                }))
+                .then(() => expect.fail(null, null, 'Request should not succeed'))
+                .catch((err) => {
+                    if (err instanceof chai.AssertionError) {
+                        throw err;
+                    }
+
+                    const res = err.response;
+                    expect(res).to.have.status(422);
+                    expect(res.body.reason).to.equal('ValidationError');
+                    expect(res.body.message).to.equal(
+                        'Username already taken',
+                    );
+                    expect(res.body.location).to.equal('username');
+                }));
+
+            it('Should create a new user', () => chai
+                .request(app)
+                .post('/api/users')
+                .send({
+                    username,
+                    password,
+                    name
+                })
+                .then((res) => {
+                    expect(res).to.have.status(201);
+                    expect(res.body.message).to.equal(
+                        `User ${username} created!`,
+                    );
+                    return User.findOne({
+                        username,
+                    });
+                })
+                .then((user) => {
+                    expect(user).to.not.be.null;
+                    expect(user.name).to.equal(name);
+                    return user.validatePassword(password);
+                })
+                .then((passwordIsCorrect) => {
+                    expect(passwordIsCorrect).to.be.true;
+                }));
+        });
+    });
+});
