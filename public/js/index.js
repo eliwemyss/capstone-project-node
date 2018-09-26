@@ -41,7 +41,7 @@ function submitNew() {
             username: `${user}`, password: `${pass}`, name: `${name}`,
         };
         $.ajax({
-            url: '/api/user',
+            url: '/api/users',
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             data: JSON.stringify(data),

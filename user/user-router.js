@@ -10,6 +10,7 @@ userRouter.post('/', (req, res) => {
         username: req.body.username,
         password: req.body.password
     };
+    console.log(newUser)
     User.findOne({
     $or: [
             { username: newUser.username }

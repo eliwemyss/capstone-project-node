@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('/api/users', () => {
+describe('User endpoints', () => {
     const username = 'exampleUser';
     const password = 'examplePass';
     const name = 'User';
@@ -23,7 +23,7 @@ describe('/api/users', () => {
 
     afterEach(() => User.remove({}));
 
-    describe('/api/users', () => {
+    describe('POST endpoint', () => {
         describe('POST', () => {
             it('Should reject creating users with missing username', () => chai
                 .request(app)
