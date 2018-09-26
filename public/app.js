@@ -11,21 +11,39 @@
 //   console.log(response);
 // });
 
-var teamInfo = {
-	'url': 'https://api.fantasydata.net/v3/cfb/scores/JSON/LeagueHierarchy?key=80dbc7beb0db44ad829b53b0193a5bf2',
-	'method': 'GET'
-}
+// var teamInfo = {
+// 	'url': 'https://api.fantasydata.net/v3/cfb/scores/JSON/LeagueHierarchy?key=80dbc7beb0db44ad829b53b0193a5bf2',
+// 	'method': 'GET'
+// }
 
-function getTeamInfo(data) {
-	$.ajax({
+// function getTeamInfo(data) {
+// 	$.ajax({
+// 		type: 'GET',
+// 		'url': 'https://api.fantasydata.net/v3/cfb/scores/JSON/LeagueHierarchy?key=80dbc7beb0db44ad829b53b0193a5bf2',
+// 		success: function(teams) {
+// 			console.log(teams)
+// 		} 
+// 	})
+// }
+
+
+function getWeeklyMatchups() {
+	$('#week').change(function() {
+		var selected = $(this).find('option:selected');
+		const week = selected.val();
+		console.log(week)
+	})
+	
+	const WEEK_URL = 'api/scores/week/{week}';
+		$.ajax({
 		type: 'GET',
-		'url': 'https://api.fantasydata.net/v3/cfb/scores/JSON/LeagueHierarchy?key=80dbc7beb0db44ad829b53b0193a5bf2',
-		success: function(teams) {
-			console.log(teams)
-		} 
+		url: WEEK_URL,
+		success: function(response) {
+		console.log(response)
+			
+		}
 	})
 }
-
 
 
 // // function displayScores(data) {
@@ -55,52 +73,51 @@ function getTeamInfo(data) {
 // })
 
 
-function getGameData(data) {
-	$.ajax({
-		type: 'GET',
-		url: '/api/scores',
-		success: function(data) {
-			console.log(data.scores)
-			let gameData = displayMatchups(data)
-			$('.score-form').html(gameData)
-		}
-	});
-}
+// function getGameData(data) {
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: '/api/scores',
+// 		success: function(data) {
+// 			console.log(data.scores)
+// 			let gameData = displayMatchups(data)
+// 			$('.score-form').html(gameData)
+// 		}
+// 	});
+// }
 
-function displayMatchups(data) {
-	var results = ''
+// function displayMatchups(data) {
+// 	var results = ''
 
-	// for(var i = 0; i < data.scores.length; i++) {
-		results = `
-		<span>${data.scores[325].AwayTeamName} </span><input type="text" name="score away" class="score-away">
-		<span>${data.scores[325].HomeTeamName}</span><input type="text" name="score home" class="score-home">
-		<button class="submit">Submit</button>
-		`
-		$('.score-form').submit(function(event) {
-  event.preventDefault();
-  const away = $('.score-away').val();
-  $('.score-away').val('')
-  const home = $('.score-home').val()
-  $('.score-home').val('')
+// 	// for(var i = 0; i < data.scores.length; i++) {
+// 		results = `
+// 		<span>${data.scores[325].AwayTeamName} </span><input type="text" name="score away" class="score-away">
+// 		<span>${data.scores[325].HomeTeamName}</span><input type="text" name="score home" class="score-home">
+// 		<button class="submit">Submit</button>
+// 		`
+// 		$('.score-form').submit(function(event) {
+//   event.preventDefault();
+//   const away = $('.score-away').val();
+//   $('.score-away').val('')
+//   const home = $('.score-home').val()
+//   $('.score-home').val('')
 
-  $('.scores').append(
-`<p>${data.scores[325].AwayTeamName} ${away} ${data.scores[325].HomeTeamName} ${home}</p>`)
-});
-	return results
-	}
+//   $('.scores').append(
+// `<p>${data.scores[325].AwayTeamName} ${away} ${data.scores[325].HomeTeamName} ${home}</p>`)
+// });
+// 	return results
+// 	}
 
 
 
-function getGameWeek(week) {
-	$.ajax({
-		type: 'GET',
-		url: 'api/scores/week/4',
-		success: function(week) {
-			console.log(week)
-		}
-	})
-}
+// function getGameWeek(week) {
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: 'api/scores/week/4',
+// 		success: function(week) {
+// 			console.log(week)
+// 		}
+// 	})
+// }
 
-getGameData();
-getGameWeek()
 
+$(getWeeklyMatchups)
