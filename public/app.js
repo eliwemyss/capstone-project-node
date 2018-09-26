@@ -34,7 +34,7 @@ function getWeeklyMatchups() {
 		console.log(week)
 	})
 	
-	const WEEK_URL = 'api/scores/week/{week}';
+	const WEEK_URL = 'api/scores/week/`${week}`';
 		$.ajax({
 		type: 'GET',
 		url: WEEK_URL,

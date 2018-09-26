@@ -77,8 +77,8 @@ router.get('/api/scores/teams/:id', function(req, res) {
 
 
 router.post('/api/scores', function(req, res) {
-	const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week']
-	for (let i = 0; i < requiredFields.length; i++) {
+	const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore']
+	for ( i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if(!(field in req.body)) {
 			const message = `Missing \`${field}\` in request body`;
@@ -117,7 +117,7 @@ router.put('/api/scores/:id', function(req, res) {
 	});
 	Scores
 		.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-		.then(updatedScore => res.status(204).end())
+		.then(updatedScore => res.status(203).end())
 		.catch(err => res.status(500).json({ message: 'Something went wrong' }))
 });
 

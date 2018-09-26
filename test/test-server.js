@@ -71,18 +71,18 @@ describe('API resource', function() {
 
           res.should.have.status(200);
           res.should.be.json;
-        //   res.body.forEach(function (score) {
-        //     post.should.include.keys('id', 'AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week', 'AwayTeamID', 'HomeTeamID');
-        //   });
+          res.body.forEach(function (scores) {
+            scores.should.include.keys('id', 'AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week', 'AwayTeamID', 'HomeTeamID')
+          })
     
-        //   resScore = res.body[0];
-        //   return Scores.findById(resScore.id);
-        // })
-        // .then(score => {
-        //   // resScore.AwayTeamName.should.equal(score.AwayTeamName);
-        //   resScore.HomeTeamName.should.equal(score.HomeTeamName);
-        //   resScore.AwayTeamScore.should.equal(score.AwayTeamScore);
-        //   resScore.HomeTeamScore.should.equal(score.HomeTeamScore);
+          resScore = res.body[0];
+          return Scores.findById(resScore.id);
+        })
+        .then(score => {
+          resScore.AwayTeamName.should.equal(score.AwayTeamName);
+          resScore.HomeTeamName.should.equal(score.HomeTeamName);
+          resScore.AwayTeamScore.should.equal(score.AwayTeamScore);
+          resScore.HomeTeamScore.should.equal(score.HomeTeamScore);
         });
     });
   });
@@ -143,7 +143,7 @@ describe('API resource', function() {
             .send(updateData);
         })
         .then(res => {
-          res.should.have.status(400);
+          res.should.have.status(203);
           return Scores.findById(updateData.id);
         })
         .then(score => {
@@ -172,10 +172,6 @@ describe('API resource', function() {
           return Scores.findById(score.id);
         })
         .then(_score => {
-          // when a variable's value is null, chaining `should`
-          // doesn't work. so `_post.should.be.null` would raise
-          // an error. `should.be.null(_post)` is how we can
-          // make assertions about a null value.
           should.not.exist(_score);
         });
     });
