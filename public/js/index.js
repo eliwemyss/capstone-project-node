@@ -36,7 +36,7 @@ function submitNew() {
         event.preventDefault();
         const user = newusername.value;
         const pass = newpassword.value;
-        const name = name.value;
+        const name = newname.value;
         const data = {
             username: `${user}`, password: `${pass}`, name: `${name}`,
         };

@@ -11,7 +11,7 @@ const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
 const { authRouter } = require('./user/auth-router');
 const { userRouter } = require('./user/user-router');
-const { scoreRouter }  = require('./router');
+const scoreRouter  = require('./router');
 const { localStrategy, jwtStrategy } = require('./user/auth-strategies')
 
 
@@ -24,7 +24,7 @@ app.use(express.static("public"));
 app.use(morgan('common'));
 app.use(express.json());
 
-// app.use('/api/scores', scoreRouter);
+app.use(scoreRouter);
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 
