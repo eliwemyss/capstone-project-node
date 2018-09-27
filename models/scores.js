@@ -43,4 +43,4 @@ scoreSchema.methods.serialize = function() {
 
 var Scores = mongoose.model('Scores', scoreSchema);
 
-module.exports = {Scores}
+module.exports = { Scores }

@@ -26,13 +26,16 @@
 
 
 function getWeeklyMatchups() {
+	var week = '';
+	var selected = '';
 	$('#week').change(function() {
-		var selected = $(this).find('option:selected');
-		const week = selected.val();
-		console.log(week)
-	})
-	
-	const WEEK_URL = 'api/scores/week/{week}';
+		 selected = $(this).find('option:selected');
+		 week = selected.val();
+		console.log('changing value to: ', week)
+
+		const WEEK_URL = `api/scores/week/${week}`;
+		console.log(WEEK_URL)
+
 		$.ajax({
 		type: 'GET',
 		url: WEEK_URL,
@@ -40,6 +43,7 @@ function getWeeklyMatchups() {
 		console.log(response)
 			
 		}
+		})
 	})
 }
 

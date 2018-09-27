@@ -143,7 +143,9 @@ describe('API resource', function() {
             .send(updateData);
         })
         .then(res => {
-          res.should.have.status(204);
+          res.should.be.json;
+          (res.body).should.be.a('object')
+          // res.should.have.status(204);
           return Scores.findById(updateData.id);
         })
         .then(score => {
