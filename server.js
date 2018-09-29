@@ -9,8 +9,8 @@ mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
-const { authRouter } = require('./user/auth-router');
 const userRouter  = require('./user/user-router.js');
+const authRouter = require('./user/auth-router');
 const scoreRouter  = require('./router');
 const { localStrategy, jwtStrategy } = require('./user/auth-strategies')
 

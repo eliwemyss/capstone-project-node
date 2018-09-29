@@ -11,6 +11,7 @@ function login() {
             headers: { 'Content-Type': 'application/json' },
             data: JSON.stringify(data),
             success: (response) => {
+                console.log(response)
                 sessionStorage.setItem('token', response.token);
                 location.href = '/main.html';
             },

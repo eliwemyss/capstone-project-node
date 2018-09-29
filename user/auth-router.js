@@ -15,7 +15,7 @@ function createJwtToken(user) {
     });
 }
 
-authRouter.post('/api/login', localPassportMiddleware, (request, response) => {
+authRouter.post('/api/auth/login', localPassportMiddleware, (request, response) => {
     const user = request.user.serialize();
     const jwtToken = createJwtToken(user);
     response.json({ jwtToken, user });
@@ -27,4 +27,4 @@ authRouter.post('/refresh', jwtPassportMiddleware, (request, response) => {
     response.json({ jwtToken, user });
 });
 
-module.exports = { authRouter };
+module.exports = authRouter;
