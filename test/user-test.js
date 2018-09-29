@@ -15,7 +15,7 @@ describe('Integration tests for: /api/users', function () {
 
     before(function () {
 
-        return runServer(true);
+        return runServer(TEST_DATABASE_URL);
     });
 
     beforeEach(function () {

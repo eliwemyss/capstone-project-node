@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+
 
 const mongoose = require('mongoose');
 
@@ -7,8 +7,9 @@ const { PORT, DATABASE_URL } = require('./config');
 const { Scores } = require('./models/scores');
 
 const app = express();
-
 app.use(express.json());
+
+const router = express.Router();
 
 
 
