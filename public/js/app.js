@@ -25,7 +25,7 @@
 // }
 
 
-function getWeeklyMatchups() {
+function getWeeklyMatchups(data) {
 	var week = '';
 	var selected = '';
 	$('#week').change(function() {
@@ -39,40 +39,39 @@ function getWeeklyMatchups() {
 		$.ajax({
 		type: 'GET',
 		url: WEEK_URL,
-		success: function(response) {
-		console.log(response)
-			
+		success: function(data) {
+		console.log(data)
+			let gameData = displayMatchups(data)
+			$('.score-form').html(gameData)	
 		}
 		})
 	})
 }
 
 
-// // function displayScores(data) {
-// 	for (var i = 0; i < data.scores.length; i++) {
-// 		$('.scores').append(
-// 			`<p>${data.scores[i].away} ${data.scores[i].away_score} ${data.scores[i].home} ${data.scores[i].home_score}</p>
-// 			`);
-// 		console.log(data.scores[i])
-// 	}
-// }
+function displayMatchups(data) {
+	var results = ''
 
+	for(var i = 0; i < data.scores.length; i++) {
+		results += `
+		<span>${data.scores[i].AwayTeamName} </span><input type="text" name="score away" class="score-away">
+		<span>${data.scores[i].HomeTeamName}</span><input type="text" name="score home" class="score-home">
+		<button class="submit">Submit</button>
+		`
+		$('.score-form').submit(function(event) {
+  event.preventDefault();
+  const away = $('.score-away').val();
+  $('.score-away').val('')
+  const home = $('.score-home').val()
+  $('.score-home').val('')
 
+  $('.scores').append(
+`<p>${data.scores[i].AwayTeamName} ${away} ${data.scores[i].HomeTeamName} ${home}</p>`)
+});
+	return results
+	}
+}
 
-
-// 	getAndDisplayScores();
-// })
-
-// $(function(scores) {
-// 	var $scores =$('.scores');
-// 	$.ajax({
-// 		type: 'GET',
-// 		url: '/api/scores',
-// 		success: function(score) {
-// 			console.log(score.scores[0])
-// 		}
-// 	});
-// })
 
 
 // function getGameData(data) {
@@ -81,44 +80,9 @@ function getWeeklyMatchups() {
 // 		url: '/api/scores',
 // 		success: function(data) {
 // 			console.log(data.scores)
-// 			let gameData = displayMatchups(data)
-// 			$('.score-form').html(gameData)
+		
 // 		}
 // 	});
-// }
-
-// function displayMatchups(data) {
-// 	var results = ''
-
-// 	// for(var i = 0; i < data.scores.length; i++) {
-// 		results = `
-// 		<span>${data.scores[325].AwayTeamName} </span><input type="text" name="score away" class="score-away">
-// 		<span>${data.scores[325].HomeTeamName}</span><input type="text" name="score home" class="score-home">
-// 		<button class="submit">Submit</button>
-// 		`
-// 		$('.score-form').submit(function(event) {
-//   event.preventDefault();
-//   const away = $('.score-away').val();
-//   $('.score-away').val('')
-//   const home = $('.score-home').val()
-//   $('.score-home').val('')
-
-//   $('.scores').append(
-// `<p>${data.scores[325].AwayTeamName} ${away} ${data.scores[325].HomeTeamName} ${home}</p>`)
-// });
-// 	return results
-// 	}
-
-
-
-// function getGameWeek(week) {
-// 	$.ajax({
-// 		type: 'GET',
-// 		url: 'api/scores/week/4',
-// 		success: function(week) {
-// 			console.log(week)
-// 		}
-// 	})
 // }
 
 
