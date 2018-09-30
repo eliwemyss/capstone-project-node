@@ -16,9 +16,9 @@ function login() {
                 location.href = '/main.html';
             },
 
-            error: (err) => {
-                $('.alert').attr('aria-hidden', 'false').removeClass('hidden');
-            },
+            // error: (err) => {
+            //     $('.alert').attr('aria-hidden', 'false').removeClass('hidden');
+            // },
 
         });
     });
