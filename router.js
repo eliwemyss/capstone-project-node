@@ -6,10 +6,37 @@ const mongoose = require('mongoose');
 const { PORT, DATABASE_URL } = require('./config');
 const { Scores } = require('./models/scores');
 
+const jwt = require('jsonwebtoken');
+
+const { localPassportMiddleware, jwtPassportMiddleware } = require('./user/auth-strategies');
+const { JWT_SECRET, JWT_EXPIRY } = require('./config.js');
+
 const app = express();
 app.use(express.json());
 
 const router = express.Router();
+
+
+
+function createJwtToken(user) {
+    return jwt.sign({ user }, JWT_SECRET, {
+        subject: user.username,
+        expiresIn: JWT_EXPIRY,
+        algorithm: 'HS256'
+    });
+}
+
+router.post('/api/auth/login', localPassportMiddleware, (request, response) => {
+    const user = request.user.serialize();
+    const jwtToken = createJwtToken(user);
+    response.json({ jwtToken, user });
+});
+
+router.post('/api/auth/login/refresh', jwtPassportMiddleware, (request, response) => {
+    const user = request.user;
+    const jwtToken = createJwtToken(user);
+    response.json({ jwtToken, user });
+});
 
 
 

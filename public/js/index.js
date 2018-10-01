@@ -4,6 +4,7 @@ function login() {
         event.preventDefault();
         const user = username.value;
         const pass = password.value;
+        console.log(user, pass)
         const data = { username: `${user}`, password: `${pass}` };
         $.ajax({
             url: '/api/auth/login',
@@ -12,13 +13,14 @@ function login() {
             data: JSON.stringify(data),
             success: (response) => {
                 console.log(response)
+                alert('Login succesful, redirecting you to homepage ...');
                 sessionStorage.setItem('token', response.token);
                 location.href = '/main.html';
             },
 
-            // error: (err) => {
-            //     $('.alert').attr('aria-hidden', 'false').removeClass('hidden');
-            // },
+            error: (err) => {
+                $('.alert').attr('aria-hidden', 'false').removeClass('hidden');
+            },
 
         });
     });

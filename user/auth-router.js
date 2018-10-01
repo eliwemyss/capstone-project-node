@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const { localPassportMiddleware, jwtPassportMiddleware } = require('./auth-strategies');
 const { JWT_SECRET, JWT_EXPIRY } = require('../config.js');
 
+
+const { Scores } = require('../models/scores');
+
+const app = express();
+app.use(express.json());
+
 const authRouter = express.Router();
 
 function createJwtToken(user) {
@@ -15,7 +21,7 @@ function createJwtToken(user) {
     });
 }
 
-authRouter.post('/api/auth/login', localPassportMiddleware, (request, response) => {
+authRouter.post('/login', localPassportMiddleware, (request, response) => {
     const user = request.user.serialize();
     const jwtToken = createJwtToken(user);
     response.json({ jwtToken, user });
