@@ -24,10 +24,25 @@
 // 	})
 // }
 
+// function parseJwt(token) {
+//     const base64Url = token.split('.')[1];
+//     const base64 = base64Url.replace('-', '+').replace('_', '/');
+//     return JSON.parse(window.atob(base64));
+// }
+
+
+function getToken() {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        return window.location.href = '/login.html';
+    } return token;
+}
+
 
 function getWeeklyMatchups(data) {
 	var week = '';
 	var selected = '';
+	const token = getToken();
 	$('#week').change(function() {
 		 selected = $(this).find('option:selected');
 		 week = selected.val();
@@ -39,10 +54,15 @@ function getWeeklyMatchups(data) {
 		$.ajax({
 		type: 'GET',
 		url: WEEK_URL,
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
 		success: function(data) {
+			// const payloadData = parseJwt(token);
+			$('.username').html()
 		console.log(data)
 			let gameData = displayMatchups(data)
-			$('.score-form').html(gameData)	
+			$('#matchup').html(gameData)	
 		}
 		})
 	})
@@ -50,29 +70,26 @@ function getWeeklyMatchups(data) {
 
 
 function displayMatchups(data) {
-	var results = ''
-
-	for(var i = 0; i < data.scores.length; i++) {
+	var results = '';
+	for(var i = 0; data.scores.length > i; i++) {
 		results += `
-		<span>${data.scores[i].AwayTeamName} </span><input type="text" name="score away" class="score-away">
-		<span>${data.scores[i].HomeTeamName}</span><input type="text" name="score home" class="score-home">
-		<button class="submit">Submit</button>
+		<option value ${[i]}><span>${data.scores[i].AwayTeamName} </span> vs <span>${data.scores[i].HomeTeamName}</span></option>
 		`
-		$('.score-form').submit(function(event) {
-  event.preventDefault();
-  const away = $('.score-away').val();
-  $('.score-away').val('')
-  const home = $('.score-home').val()
-  $('.score-home').val('')
-
-  $('.scores').append(
-`<p>${data.scores[i].AwayTeamName} ${away} ${data.scores[i].HomeTeamName} ${home}</p>`)
-});
-	return results
+	
 	}
+	return results
 }
 
+function selectedMatchup() {
+	var matchup;
+	var matchupSelected;
+		$('#matchup').change(function() {
+		 matchupSelected = $(this).find('option:selected');
+		 matchup = matchupSelected.val();
+		 console.log(matchup.text)
 
+});
+}
 
 // function getGameData(data) {
 // 	$.ajax({
@@ -85,5 +102,27 @@ function displayMatchups(data) {
 // 	});
 // }
 
+function logout() {
+    $('.logout').on('click', () => {
+        sessionStorage.removeItem('token');
+        window.location.href = '/';
+    });
+}
 
-$(getWeeklyMatchups)
+
+// 		$('.score-form').submit(function(event) {
+//   event.preventDefault();
+//   const away = $('.score-away').val();
+//   $('.score-away').val('')
+//   const home = $('.score-home').val()
+//   $('.score-home').val('')
+
+//   $('.scores').append(
+// `<p>${data.scores[i].AwayTeamName} ${away} ${data.scores[i].HomeTeamName} ${home}</p>`)
+// });
+
+
+$(getToken);
+$(logout);
+$(getWeeklyMatchups);
+$(selectedMatchup)

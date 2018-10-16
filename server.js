@@ -27,7 +27,7 @@ app.use(express.json());
 app.use('/api/users', userRouter);
 app.use(scoreRouter);
 
-app.use('/api/auth', authRouter);
+app.use(authRouter);
 
 
 let server;
