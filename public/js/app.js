@@ -37,7 +37,8 @@ function getWeeklyMatchups(data) {
 			$('.username').html()
 		console.log(data)
 			let gameData = displayMatchups(data)
-			$('#matchup').html(gameData)	
+			$('#matchup').html(gameData)
+			selectedMatchup()	
 		}
 		})
 	})
@@ -53,18 +54,21 @@ function displayMatchups(data) {
 	
 	}
 	return results
+
 }
 
 function selectedMatchup() {
-	var matchup = '';
-	var selected = '';
+	var matchup;
+	var selected;
 	const token = getToken();
 	$('#matchup').change(function() {
 		selected = $(this).find('option:selected');
 		matchup = selected.val();
-		console.log('changing value to: ', selected)
+		console.log('chosen matchup: ', matchup)
 })
 }
+
+
 
 
 function logout() {
@@ -79,4 +83,3 @@ function logout() {
 $(getToken);
 $(logout);
 $(getWeeklyMatchups);
-$(selectedMatchup);
