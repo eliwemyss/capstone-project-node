@@ -24,7 +24,7 @@ body {
   margin-top:5px;
 }*/
 
-.login-container {
+.container {
   display: block;
   text-align: center; 
   align-items: center; 
@@ -61,7 +61,6 @@ body {
   color:red;
 }
 .createForm {
-
   width: 60%;
   margin: 4% auto;
   padding: 2%;
@@ -69,7 +68,7 @@ body {
 }
 
 .createForm button{
-  width: 60% ;
+  width: 25% ;
   margin: 0 auto;
   margin-top: 10px;
   background-color: green;
@@ -77,15 +76,6 @@ body {
   
 }
 
-
-
-.container img{
-  width: 20% ;
-  margin: 0 auto;
-  margin-top: 10px;
-  display: block;
-  
-}
 
 .form-box {
   display: inherit;
