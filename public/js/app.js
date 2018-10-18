@@ -37,8 +37,7 @@ function getWeeklyMatchups(data) {
 			$('.username').html()
 		console.log(data)
 			let gameData = displayMatchups(data)
-			$('#matchup').html(gameData)
-			selectedMatchup()	
+			$('#matchup').html(gameData)	
 		}
 		})
 	})
@@ -49,7 +48,7 @@ function displayMatchups(data) {
 	var results = '';
 	for(var i = 0; data.scores.length > i; i++) {
 		results += `
-		<option value ${[i]}><span>${data.scores[i].AwayTeamName} </span> vs <span>${data.scores[i].HomeTeamName}</span></option>
+		<option value="${[i]}">${data.scores[i].AwayTeamName} vs ${data.scores[i].HomeTeamName}</option>
 		`
 	
 	}
@@ -61,9 +60,9 @@ function selectedMatchup() {
 	var matchup;
 	var selected;
 	const token = getToken();
-	$('#matchup').change(function() {
+	$('#matchup').on('change', function() {
 		selected = $(this).find('option:selected');
-		matchup = selected.val();
+		matchup = selected.text();
 		console.log('chosen matchup: ', matchup)
 })
 }
@@ -83,3 +82,4 @@ function logout() {
 $(getToken);
 $(logout);
 $(getWeeklyMatchups);
+$(selectedMatchup);

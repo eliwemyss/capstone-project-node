@@ -9,9 +9,10 @@ mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
-const authRouter = require('./user/auth-router');
+
 const userRouter  = require('./user/user-router.js');
 const scoreRouter  = require('./router');
+const predictionRouter = require('./feed-router');
 const { localStrategy, jwtStrategy } = require('./user/auth-strategies')
 
 
@@ -26,8 +27,8 @@ app.use(express.json());
 
 app.use('/api/users', userRouter);
 app.use(scoreRouter);
+app.use(predictionRouter);
 
-app.use(authRouter);
 
 
 let server;
