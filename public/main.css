@@ -142,6 +142,7 @@ display: inline-block;
 	padding-top: 100px;
 }
 
-.scores {
+.selected-scores {
   text-align: center;
+  display: block;
 }

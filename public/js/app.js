@@ -36,15 +36,15 @@ function getWeeklyMatchups(data) {
 			// const payloadData = parseJwt(token);
 			$('.username').html()
 		console.log(data)
-			let gameData = displayMatchups(data)
-			$('#matchup').html(gameData)	
+			let gameData = weekDropdown(data)
+			$('#matchup').html(gameData)
 		}
 		})
 	})
 }
 
 
-function displayMatchups(data) {
+function weekDropdown(data) {
 	var results = '';
 	for(var i = 0; data.scores.length > i; i++) {
 		results += `
@@ -64,8 +64,11 @@ function selectedMatchup() {
 		selected = $(this).find('option:selected');
 		matchup = selected.text();
 		console.log('chosen matchup: ', matchup)
-})
+		$('.selected-scores').html(matchup)
+		
+	})
 }
+
 
 
 
