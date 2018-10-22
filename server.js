@@ -12,6 +12,7 @@ const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
 const userRouter  = require('./user/user-router.js');
 const scoreRouter  = require('./router');
+const predictionRouter = require('./prediction-router');
 const { localStrategy, jwtStrategy } = require('./user/auth-strategies')
 
 
@@ -26,6 +27,7 @@ app.use(express.json());
 
 app.use('/api/users', userRouter);
 app.use(scoreRouter);
+app.use(predictionRouter);
 
 
 

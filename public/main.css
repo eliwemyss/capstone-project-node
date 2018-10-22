@@ -8,8 +8,8 @@ body {
   margin: 0;
   height: 100vh;
   width: 100vw;
-/*  background-image: url('/images/field.jpg');
-*/  background-size: 100% 100%;
+/* background-image: url('/images/field.jpg');*/
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
@@ -38,9 +38,6 @@ body {
   display: none; 
 }
 
-.table th {
-   text-align: center;   
-}
 
 .login {
   width: 39%;
@@ -145,4 +142,22 @@ display: inline-block;
 .selected-scores {
   text-align: center;
   display: block;
+}
+
+.input-container {
+/*    background-color: grey;
+    opacity: 0.8;*/
+    margin-left: 25%;
+    margin-top: 50px;
+    width: 50%;
+    height: 50px;
+}
+
+
+.posted-scores {
+  text-align: center;
+  padding-top: 150px;
+}
+.feed-results {
+  text-align: center;
 }

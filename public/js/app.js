@@ -63,14 +63,72 @@ function selectedMatchup() {
 	$('#matchup').on('change', function() {
 		selected = $(this).find('option:selected');
 		matchup = selected.text();
-		console.log('chosen matchup: ', matchup)
-		$('.selected-scores').html(matchup)
+		teams = matchup.split('vs')
+
+		let predictions = `	
+		<div class="input-container">
+		<form class="score-form">	
+			<label>${teams[0]}</label><input type="text" name="score away" class="score-away">
+			<label>${teams[1]}</label><input type="text" name="score home" class="score-home">
+
+			<input type="hidden" name="away-team" class="away-team" value="${teams[0]}">
+			<input type="hidden" name="home-team" class="home-team" value="${teams[1]}">
+			<button class="submit">Submit</button>
+		</form>
+		</div>`
+
+		$('.selected-scores').html(predictions)
 		
 	})
 }
 
+function postPrediction() {
+	$('.selected-scores').on('submit', '.score-form', function(event) {
+		event.preventDefault();
+ 		const away = $('.score-away').val();
+  		$('.score-away').val('')
+  		const home = $('.score-home').val()
+  		$('.score-home').val('')
 
+  		const awayTeam = $('.away-team').val();
+  		const homeTeam = $('.home-team').val();
 
+  		console.log(away)
+  		$('.posted-scores').append(`<p>${awayTeam} ${away} ${homeTeam} ${home}`)
+
+  		$.ajax({
+  			type: 'POST',
+  			
+  		})
+});
+}
+
+function getFeed() {
+	var week = '';
+	var selected = '';
+	const token = getToken();
+	$('#week-feed').change(function() {
+		 selected = $(this).find('option:selected');
+		 week = selected.val();
+		const WEEK_URL = `api/scores/week/${week}`;
+		console.log(WEEK_URL)
+
+		$.ajax({
+		type: 'GET',
+		url: WEEK_URL,
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		success: function(data) {
+			// const payloadData = parseJwt(token);
+			$('.username').html()
+		console.log(data)
+			let gameData = weekDropdown(data)
+			$('.feed-results').html(gameData)	
+		}
+		})
+	})
+}
 
 
 function logout() {
@@ -83,6 +141,8 @@ function logout() {
 
 
 $(getToken);
+$(postPrediction);
+$(getFeed);
 $(logout);
 $(getWeeklyMatchups);
 $(selectedMatchup);
