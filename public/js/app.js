@@ -99,7 +99,7 @@ function postPrediction() {
   		$.ajax({
   			type: 'POST',
   			data: {'AwayTeamName': '${awayTeam}', 'HomeTeamName': '${homeTeam}'},
-  			url: '/api/scores',
+  			url: '/api/scores/',
   			success: function(predictions) {
   				console.log(predictions)
   			}
