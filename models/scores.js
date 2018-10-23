@@ -17,12 +17,12 @@ var scoreSchema = mongoose.Schema({
 	HomeTeamScore:{
 		type: String
 	},
-	"AwayTeamID":{
-		type: Number
-	},
-	"HomeTeamID":{
-		type: Number
-	},
+	// "AwayTeamID":{
+	// 	type: Number
+	// },
+	// "HomeTeamID":{
+	// 	type: Number
+	// },
 	Week:{
 		type: Number
 	}

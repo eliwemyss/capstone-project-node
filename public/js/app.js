@@ -80,6 +80,10 @@ function selectedMatchup() {
 		$('.selected-scores').html(predictions)
 		
 	})
+};
+
+function getUserPredictions() {
+
 }
 
 function postPrediction() {
@@ -93,13 +97,26 @@ function postPrediction() {
   		const awayTeam = $('.away-team').val();
   		const homeTeam = $('.home-team').val();
 
-  		console.log(away)
-  		$('.posted-scores').append(`<p>${awayTeam} ${away} ${homeTeam} ${home}`)
+  		const newPredction = {
+  			AwayTeamName: `${awayTeam}`,
+  			AwayTeamScore: `${away}`,
+  			HomeTeamName: `${homeTeam}`,
+  			HomeTeamScore: `${home}`,
+  			Week: $('#week').val()
+  		};
 
+  		$('.away-table').append(`${awayTeam}`)
+  		$('.home-table').append(`${homeTeam}`)
+  		$('.predicted-table').append(`${away} - ${home}`)
+  		const token = getToken();
   		$.ajax({
   			type: 'POST',
-  			data: {'AwayTeamName': '${awayTeam}', 'HomeTeamName': '${homeTeam}'},
+  			data: JSON.stringify(newPredction),
   			url: '/api/scores/',
+  			headers: {
+  				'Content-Type': 'application/json',
+  				'Authorization': `Bearer ${token}`
+  			},
   			success: function(predictions) {
   				console.log(predictions)
   			}
@@ -107,6 +124,7 @@ function postPrediction() {
   		})
 });
 }
+
 
 function getFeed() {
 	var week = '';

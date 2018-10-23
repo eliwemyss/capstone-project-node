@@ -1,7 +1,11 @@
 const express = require('express');
 const passport = require('passport')
+const bodyParser = require('body-parser');
+
+const jsonParson = bodyParser.json();
 
 const mongoose = require('mongoose');
+
 
 const { PORT, DATABASE_URL } = require('./config');
 const { Scores } = require('./models/scores');
@@ -37,7 +41,6 @@ router.post('/api/auth/login/refresh', jwtPassportMiddleware, (request, response
     const jwtToken = createJwtToken(user);
     response.json({ jwtToken, user });
 });
-
 
 
 router.get('/api/scores', function(req, res) {
@@ -83,33 +86,16 @@ router.get('/api/scores/week/:id', function(req, res) {
 
 });
 
-router.get('/api/scores/teams/:id', function(req, res) {
-    
-    Scores
-        .find({ 
-            'HomeTeamID': req.params.id
-        })
-        .then(scores => {
-            res.json({
-                scores: scores.map(
-                    (score) => score.serialize())
-            })
-        })
-        .catch(err => {
-            
-
-            res.status(500).json({ error: 'something not working', params: req.params.Week, p: err})
-        });
-
-});
-
 
 router.post('/api/scores', function(req, res) {
-    const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore']
-    for ( i = 0; i < requiredFields.length; i++) {
+    const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week']
+
+    for ( let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
+        console.log(req.body)
         if(!(field in req.body)) {
-            const message = `Missing \`${field}\` in request body....`;
+            console.log('req body is', req.body)
+            const message = `Missing \`${field}\` in request body bruh....`;
             console.error(message);
             return res.status(400).send(message);
         }
