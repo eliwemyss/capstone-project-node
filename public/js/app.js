@@ -115,9 +115,15 @@ function postPrediction() {
   				'Content-Type': 'application/json',
   				'Authorization': `Bearer ${token}`
   			},
-  			success: function(predictions) {
-  				let userPick = displayPost(predictions)
-  				$('.user-post').append(userPick)
+  			success: function(data) {
+  				console.log(data.AwayTeamName)
+  				$('.user-post').append(`
+					<tr>
+				      <td>${data.AwayTeamName}</td>
+				      <td>${data.HomeTeamName}</td>
+      				  <td>${data.AwayTeamScore} - ${data.HomeTeamScore}</td>
+    				</tr>
+				`)
   			}
 
   		})
@@ -152,20 +158,20 @@ function getFeed() {
 	})
 }
 
-function displayPost(predictions) {
-	let userPost = '';
-	console.log(predictions)
-	for(let i = 0; i < predictions.length; i++) {
-				feed +=`
-					<tr>
-				      <td>${predictions.scores[i].AwayTeamName}</td>
-				      <td>${predictions.scores[i].HomeTeamName}</td>
-      				  <td>${predictions.scores[i].AwayTeamScore} - ${predictions.scores[i].HomeTeamScore}</td>
-    				</tr>
-				`
-			}
-			return userPost
-}
+// function displayPost(predictions) {
+
+// 	console.log(predictions.scores[0])
+// 	let userPost =`
+// 					<tr>
+// 				      <td>${predictions[0].AwayTeamName}</td>
+// 				      <td>${predictions.scores[0].HomeTeamName}</td>
+//       				  <td>${predictions.scores[0].AwayTeamScore} - ${predictions.scores[i].HomeTeamScore}</td>
+//     				</tr>
+// 				`
+// 				return userPost
+// 			}
+			
+
 
 function displayFeed(data) {
 	let feed = '';
