@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const {app, runServer, closeServer} = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 const { Scores } = require('../models/scores')
+const { Predictions } = require('../models/predictions')
 
 const expect = chai.expect;
 
@@ -28,13 +29,13 @@ function seedScoreData() {
   const seedData = [];
   for(let i = 1; i <= 20; i++) {
     seedData.push({
-    AwayTeamName: 'Florida Gators',
-    HomeTeamName: 'Tennessee Volunteers',
-    AwayTeamScore: '23',
-    HomeTeamScore: '28',
-    Week: '4'
+    'AwayTeamName': 'Florida Gators',
+    'HomeTeamName': 'Tennessee Volunteers',
+    'AwayTeamScore': '23',
+    'HomeTeamScore': '28',
+    'Week': '4'
   });
-    return Scores.insertMany(seedData)
+    return Predictions.insertMany(seedData)
   }
 }
 
@@ -54,10 +55,20 @@ describe('API resource', function() {
 
  describe('GET endpoint', function () {
 
-    it('should return all existing scores', function () {
+    it('should return matchups', function () {
       let res;
       return chai.request(app)
         .get('/api/scores')
+        .then(_res => {
+          res = _res;
+          expect(res).to.have.status(200);
+    });
+});
+
+    it('should return user inputted predictions', function () {
+      let res;
+      return chai.request(app)
+        .get('/api/predictions')
         .then(_res => {
           res = _res;
           expect(res).to.have.status(200);
@@ -82,7 +93,7 @@ describe('API resource', function() {
       const newPrediction = createFakeScore();
 
       return chai.request(app)
-        .post('/api/scores')
+        .post('/api/predictions')
         console.log(newPrediction)
         .send(newPrediction)
         .then(function (res) {
@@ -108,10 +119,9 @@ describe('API resource', function() {
     it('should update fields you send over', function () {
       let scoreToUpdate;
       const newScore = createFakeScore();
-      return Scores.find()
+      return Predictions.find()
         .then(scores => {
           expect(scores).to.be.a('array');
-          expect(scores).to.have.lengthOf.at.least(1);
           scoreToUpdate = scores [0];
         })
       })
@@ -123,15 +133,15 @@ describe('API resource', function() {
 
       let score;
 
-      return Scores
+      return Predictions
         .findOne()
         .then(_score => {
           score = _score;
-          return chai.request(app).delete(`/api/scores/${score.id}`);
+          return chai.request(app).delete(`/api/predictions/${score.id}`);
         })
         .then(res => {
           expect(res).to.have.status(204);
-          return Scores.findById(score.id);
+          return Predictions.findById(score.id);
         })
         .then(_score => {
           expect(_score).to.not.exist;
@@ -142,8 +152,8 @@ describe('API resource', function() {
 
 function createFakeScore() {
   return{
-    AwayTeamName: faker.random.number(100),
-    HomeTeamScore: faker.random.number(100)
+    'AwayTeamName': faker.random.number(100),
+    'HomeTeamScore': faker.random.number(100)
   };
 }
 

@@ -1,4 +1,3 @@
-
 // function parseJwt(token) {
 //     const base64Url = token.split('.')[1];
 //     const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -15,8 +14,8 @@ function getToken() {
 
 
 function getWeeklyMatchups(data) {
-	var week = '';
-	var selected = '';
+	let week = '';
+	let selected = '';
 	const token = getToken();
 	$('#week').change(function() {
 		selected = $(this).find('option:selected');
@@ -45,8 +44,8 @@ function getWeeklyMatchups(data) {
 
 
 function weekDropdown(data) {
-	var results = '';
-	for(var i = 0; data.scores.length > i; i++) {
+	let results = '';
+	for(let i = 0; data.scores.length > i; i++) {
 		results += `
 		<option value="${[i]}">${data.scores[i].AwayTeamName} vs ${data.scores[i].HomeTeamName}</option>
 		`
@@ -57,8 +56,8 @@ function weekDropdown(data) {
 }
 
 function selectedMatchup() {
-	var matchup;
-	var selected;
+	let matchup;
+	let selected;
 	const token = getToken();
 	$('#matchup').on('change', function() {
 		selected = $(this).find('option:selected');
@@ -70,7 +69,6 @@ function selectedMatchup() {
 		<form class="score-form">	
 			<label>${teams[0]}</label><input type="text" name="score away" class="score-away">
 			<label>${teams[1]}</label><input type="text" name="score home" class="score-home">
-
 			<input type="hidden" name="away-team" class="away-team" value="${teams[0]}">
 			<input type="hidden" name="home-team" class="home-team" value="${teams[1]}">
 			<button class="submit">Submit</button>
@@ -112,13 +110,14 @@ function postPrediction() {
   		$.ajax({
   			type: 'POST',
   			data: JSON.stringify(newPredction),
-  			url: '/api/scores/',
+  			url: '/api/predictions/',
   			headers: {
   				'Content-Type': 'application/json',
   				'Authorization': `Bearer ${token}`
   			},
   			success: function(predictions) {
-  				console.log(predictions)
+  				let userPick = displayPost(predictions)
+  				$('.user-post').append(userPick)
   			}
 
   		})
@@ -127,13 +126,13 @@ function postPrediction() {
 
 
 function getFeed() {
-	var week = '';
-	var selected = '';
+	let week = '';
+	let selected = '';
 	const token = getToken();
 	$('#week-feed').change(function() {
 		 selected = $(this).find('option:selected');
 		 week = selected.val();
-		const WEEK_URL = `api/scores/week/${week}`;
+		const WEEK_URL = `api/predictions/week/${week}`;
 		console.log(WEEK_URL)
 
 		$.ajax({
@@ -143,16 +142,44 @@ function getFeed() {
 			Authorization: `Bearer ${token}`,
 		},
 		success: function(data) {
-			// const payloadData = parseJwt(token);
-			$('.username').html()
-		console.log(data)
-			let gameData = weekDropdown(data)
-			$('.feed-results').html(gameData)	
+			console.log(data.scores[0].AwayTeamName)
+			let feedData = displayFeed(data);
+			$('tbody').html(feedData)
+
+
 		}
 		})
 	})
 }
 
+function displayPost(predictions) {
+	let userPost = '';
+	console.log(predictions)
+	for(let i = 0; i < predictions.length; i++) {
+				feed +=`
+					<tr>
+				      <td>${predictions.scores[i].AwayTeamName}</td>
+				      <td>${predictions.scores[i].HomeTeamName}</td>
+      				  <td>${predictions.scores[i].AwayTeamScore} - ${predictions.scores[i].HomeTeamScore}</td>
+    				</tr>
+				`
+			}
+			return userPost
+}
+
+function displayFeed(data) {
+	let feed = '';
+	for(let i = 0; i < data.scores.length; i++) {
+				feed +=`
+					<tr>
+				      <td>${data.scores[i].AwayTeamName}</td>
+				      <td>${data.scores[i].HomeTeamName}</td>
+      				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>
+    				</tr>
+				`
+			}
+			return feed
+}
 
 function logout() {
     $('.logout').on('click', () => {

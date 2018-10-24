@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 
 
 const { PORT, DATABASE_URL } = require('./config');
+const { Predictions } = require('./models/predictions');
 const { Scores } = require('./models/scores');
 
 const jwt = require('jsonwebtoken');
@@ -58,8 +59,24 @@ router.get('/api/scores', function(req, res) {
         });
 });
 
-router.get('/api/scores/:id', function(req, res) {
-    Scores
+router.get('/api/predictions', function(req, res) {
+    Predictions
+        .find()
+        .then(scores => {
+            res.json({
+                scores: scores.map(
+                    (score) => score.serialize())
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({message: 'Internal server error'})
+        });
+});
+
+
+router.get('/api/predictions/:id', function(req, res) {
+    Predictions
         .findById(req.params.id)
         .then(scores => res.json(scores.serialize()))
         .catch(err => {
@@ -86,8 +103,26 @@ router.get('/api/scores/week/:id', function(req, res) {
 
 });
 
+router.get('/api/predictions/week/:id', function(req, res) {
+    
+    Predictions
+        .find({ 'Week': req.params.id})
+        .then(scores => {
+            res.json({
+                scores: scores.map(
+                    (score) => score.serialize())
+            })
+        })
+        .catch(err => {
+            
 
-router.post('/api/scores', function(req, res) {
+            res.status(500).json({ error: 'something not working', params: req.params.Week, p: err})
+        });
+
+});
+
+
+router.post('/api/predictions', function(req, res) {
     const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week']
 
     for ( let i = 0; i < requiredFields.length; i++) {
@@ -95,13 +130,13 @@ router.post('/api/scores', function(req, res) {
         console.log(req.body)
         if(!(field in req.body)) {
             console.log('req body is', req.body)
-            const message = `Missing \`${field}\` in request body bruh....`;
+            const message = `Missing \`${field}\` in request body....`;
             console.error(message);
             return res.status(400).send(message);
         }
     }
 
-    Scores
+    Predictions
         .create({
             AwayTeamName: req.body.AwayTeamName,
             HomeTeamName: req.body.HomeTeamName,
@@ -116,7 +151,7 @@ router.post('/api/scores', function(req, res) {
         });
 });
 
-router.put('/api/scores/:id', function(req, res) {
+router.put('/api/predictions/:id', function(req, res) {
     if(req.params.id  === req.body.id) {
         res.status(400).json({
             error: 'Request path id and request body id values must match'
@@ -129,14 +164,14 @@ router.put('/api/scores/:id', function(req, res) {
             updated[field] = req.body[field];
         }
     });
-    Scores
+    Predictions
         .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
         .then(updatedScore => res.status(203).end())
         .catch(err => res.status(500).json({ message: 'Something went wrong' }))
 });
 
-router.delete('/api/scores/:id', function(req, res) {
-    Scores
+router.delete('/api/predictions/:id', function(req, res) {
+    Predictions
         .findByIdAndRemove(req.params.id)
         .then(() => {
             console.log(`Deleted score prediction with id \`${req.params.id}\``);
