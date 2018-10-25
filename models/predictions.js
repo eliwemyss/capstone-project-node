@@ -33,6 +33,7 @@ predictionSchema.methods.serialize = function() {
 		HomeTeamName: this.HomeTeamName,
 		AwayTeamScore: this.AwayTeamScore,
 		HomeTeamScore: this.HomeTeamScore,
+		user: this.user,
 		Week: this.Week
 	}
 }
