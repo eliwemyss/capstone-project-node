@@ -44,7 +44,7 @@ function getWeeklyMatchups(data) {
 
 
 function weekDropdown(data) {
-	let results = '';
+	let results = '<option value selected="selected">Choose Matchup</option>';
 	for(let i = 0; data.scores.length > i; i++) {
 		results += `
 		<option value="${[i]}">${data.scores[i].AwayTeamName} vs ${data.scores[i].HomeTeamName}</option>
@@ -81,8 +81,20 @@ function selectedMatchup() {
 };
 
 function getUserPredictions() {
-
+	const token = getToken();
+	$.ajax({
+		type: 'GET',
+		url: '/api/predictions',
+		headers: {
+			Authorization: `Bearer ${token}`
+		},
+		success: function(data) {
+			let userData = displayUserFeed(data);
+			$('tbody').html(userData)
+		}
+	})
 }
+
 
 function postPrediction() {
 	$('.selected-scores').on('submit', '.score-form', function(event) {
@@ -122,6 +134,7 @@ function postPrediction() {
 				      <td>${data.AwayTeamName}</td>
 				      <td>${data.HomeTeamName}</td>
       				  <td>${data.AwayTeamScore} - ${data.HomeTeamScore}</td>
+      				  <td><a href="#" class="edit" data-id="${data.id}">Edit</a> <a href="#" class="delete" data-id="${data.id}">Delete</a></td>
     				</tr>
 				`)
   			}
@@ -158,21 +171,7 @@ function getFeed() {
 	})
 }
 
-// function displayPost(predictions) {
-
-// 	console.log(predictions.scores[0])
-// 	let userPost =`
-// 					<tr>
-// 				      <td>${predictions[0].AwayTeamName}</td>
-// 				      <td>${predictions.scores[0].HomeTeamName}</td>
-//       				  <td>${predictions.scores[0].AwayTeamScore} - ${predictions.scores[i].HomeTeamScore}</td>
-//     				</tr>
-// 				`
-// 				return userPost
-// 			}
 			
-
-
 function displayFeed(data) {
 	let feed = '';
 	for(let i = 0; i < data.scores.length; i++) {
@@ -187,6 +186,42 @@ function displayFeed(data) {
 			return feed
 }
 
+function displayUserFeed(data) {
+	let userFeed = '';
+	for(let i = 0; i < data.scores.length; i++) {
+				userFeed +=`
+					<tr>
+				      <td>${data.scores[i].AwayTeamName}</td>
+				      <td>${data.scores[i].HomeTeamName}</td>
+      				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>
+      				  <td><a href="#" class="edit" data-id="${data.scores[i].id}">Edit</a> <a href="#" class="delete" data-id="${data.scores[i].id}">Delete</a></td>
+    				</tr>
+				`
+			}
+			return userFeed
+}
+
+function deletePrediction() {
+	$('.delete').on('click', function () {
+		const token = getToken();
+		const teamid = $(this).attr('data-id');
+		console.log(teamid)
+		$.ajax({
+			url: `/api/predictions/${teamid}`,
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+			success: function(response) {
+				window.location.href = '/main.html';
+			},
+			error: (err) => {
+				console.log(err);
+			}
+		})
+	})
+}
+
 function logout() {
     $('.logout').on('click', () => {
         sessionStorage.removeItem('token');
@@ -199,6 +234,8 @@ function logout() {
 $(getToken);
 $(postPrediction);
 $(getFeed);
+$(getUserPredictions);
+$(deletePrediction);
 $(logout);
 $(getWeeklyMatchups);
 $(selectedMatchup);
