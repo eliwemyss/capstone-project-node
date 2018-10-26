@@ -162,7 +162,7 @@ function displayUserFeed(data) {
 }
 
 function deletePrediction() {
-	$('.delete').on('click', function () {
+	$('.user-post').on('click', '.delete', function() {
 		const token = getToken();
 		const teamid = $(this).attr('data-id');
 		console.log(teamid)
