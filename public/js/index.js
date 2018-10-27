@@ -46,13 +46,12 @@ function submitNew() {
             headers: { 'Content-Type': 'application/json' },
             data: JSON.stringify(data),
             success: (response) => {
-                $('.createForm').addClass('hidden');
-                $('.successful').removeClass('hidden');
+                alert('Account successfully created. Redirecting to login...')
+                location.href = '/login.html'
             },
 
             error: (err) => {
-                console.log(err);
-                $('.alert').attr('aria-hidden', 'false').removeClass('hidden');
+
             },
 
         });
