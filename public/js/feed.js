@@ -47,4 +47,12 @@ function displayFeed(data) {
 			return feed
 }
 
-$(getFeed)
+function logout() {
+    $('.logout').on('click', () => {
+        sessionStorage.removeItem('token');
+        window.location.href = '/';
+    });
+}
+
+$(getFeed);
+$(logout);

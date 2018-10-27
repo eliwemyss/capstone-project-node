@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-	<meta charset="utf-8">
-	<title>Node Capstone</title>
+  <meta charset="utf-8">
+  <title>Node Capstone</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	 <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous">
-  	</script>
-  	<link rel="stylesheet" type="text/css" href="main.css">
-  	<link rel="stylesheet" type="text/css" href="grid.css">
+    </script>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/grid.css">
 </head>
 <body>
-	  <main>
-
-    <div class="container">
-      <div class="login-container">
-        <h1>Score Predictions</h1>
-        <div class="login form-box ">
-          <div class="alert hidden" aria-hidden="true"><p> You have entered an incorrect username or password. </p></div>
-          <div class="col-md-12">
-            <form action="" method="">
-              <legend>LOGIN</legend>
+    <nav class="navbar">
+    <h1>NCAA Score Predictions</h1>
+    </nav>
+    <main>
+    <div class="form-container">
+        <h1>Login</h1>
+            <form class="login">
               <input aria-label="username" name="username" id="username" type="text" placeholder="username" required>
               <input aria-label="password" type="password" id="password" placeholder="password" required>
-              <button class="login" type="submit" id="login">Login</button>
+              <button class="loginbtn" type="submit" id="login">Login</button>
             </form>
+             <a href="index.html"><button class="backbtn" type="submit" id="back">Back</button></a>
+              <div class="signin-link"><a href="login.html">Already have an account? Click here</a></div>
           </div>
         </div>
       </main>

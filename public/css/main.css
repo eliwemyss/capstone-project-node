@@ -16,80 +16,6 @@ body {
 }
 
 
-.container {
-  display: block;
-  text-align: center; 
-  align-items: center; 
-  margin-top: 20%;   
-}
-
-.landing button{
-  display:inline-block;
-  width:20%;
-  background-color: #f77f00;
-  border:none;
-  margin-top:5px;
-}
-
-.makeNew, .login  {
-  background-color: white;
-}
-.hidden { 
-  display: none; 
-}
-
-
-.login {
-  width: 39%;
-  margin: 4% auto;
-  padding: 2%;
-}
-
-.login button {
-  background-color: #f77f00; 
-  border:none;
-}
-
-.alert {
-  color:red;
-}
-.createForm {
-  width: 60%;
-  margin: 4% auto;
-  padding: 2%;
-
-}
-
-.createForm button{
-  width: 25% ;
-  margin: 0 auto;
-  margin-top: 10px;
-  background-color: #f77f00;
-  border:none;
-  
-}
-
-
-.form-box {
-  display: inherit;
-}
-
-.form-box input {
-  display: block;
-  margin: 0 auto;
-  margin-top:10px;
-  padding: 5px; 
-  font-size:18px;
-}
-
-.createAccount input  {
-  display: block;
-  margin: 0 auto;
-  margin-top:10px;
-  padding: 5px; 
-  font-size:18px;
-}
-
 .navbar {
   background-color: #313639;
   color: white;
@@ -125,6 +51,24 @@ display: inline-block;
 
 .navbar-nav { 
     flex-direction: row;
+}
+.buttoncontainer {
+  margin-top: 3%;
+  display: block;
+  text-align: center;
+}
+
+.bodybutton {
+  height: 60px;
+  width: 180px;
+  font-size: 1.2em;
+  font-weight: 300;
+  color: white;
+  background-color: #241b1f;
+  border:1px white solid;
+  border-radius:50px;
+  cursor: pointer;
+  margin: 10px;
 }
 
 .dropdown {
