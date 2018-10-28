@@ -33,7 +33,6 @@ function getWeeklyMatchups(data) {
 			Authorization: `Bearer ${token}`,
 		},
 		success: function(data) {
-			// const payloadData = parseJwt(token);
 			$('.username').html()
 		console.log(data)
 			let gameData = weekDropdown(data)
@@ -90,6 +89,7 @@ function getUserPredictions() {
 			Authorization: `Bearer ${token}`
 		},
 		success: function(data) {
+			// const payloadData = parseJwt(token);
 			let userData = displayUserFeed(data);
 			$('tbody').html(userData)
 		}
@@ -129,12 +129,12 @@ function postPrediction() {
   				'Authorization': `Bearer ${token}`
   			},
   			success: function(data) {
-  				console.log(data.AwayTeamName)
   				$('.user-post').append(`
 					<tr>
 				      <td>${data.AwayTeamName}</td>
 				      <td>${data.HomeTeamName}</td>
       				  <td>${data.AwayTeamScore} - ${data.HomeTeamScore}</td>
+      				  <td>${data.Week}</td>
       				  <td><a href="#" class="edit" data-id="${data.id}">Edit</a> <a href="#" class="delete" data-id="${data.id}">Delete</a></td>
     				</tr>
 				`)
@@ -155,6 +155,7 @@ function displayUserFeed(data) {
 				      <td>${data.scores[i].AwayTeamName}</td>
 				      <td>${data.scores[i].HomeTeamName}</td>
       				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>
+      				  <td>${data.scores[i].Week}</td>
       				  <td><a href="#" class="edit" data-id="${data.scores[i].id}">Edit</a> <a href="#" class="delete" data-id="${data.scores[i].id}">Delete</a></td>
     				</tr>
 				`
@@ -183,6 +184,12 @@ function deletePrediction() {
 	})
 }
 
+function displayEdit() {
+	$('.edit').on('click', function(event) {
+
+	}
+}
+
 function logout() {
     $('.logout').on('click', () => {
         sessionStorage.removeItem('token');
@@ -194,7 +201,6 @@ function logout() {
 
 $(getToken);
 $(postPrediction);
-
 $(getUserPredictions);
 $(deletePrediction);
 $(logout);

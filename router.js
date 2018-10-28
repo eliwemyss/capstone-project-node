@@ -10,8 +10,9 @@ const mongoose = require('mongoose');
 const { PORT, DATABASE_URL } = require('./config');
 const { Predictions } = require('./models/predictions');
 const { Scores } = require('./models/scores');
-
+const { User } = require('./models/users')
 const jwt = require('jsonwebtoken');
+
 
 const { localPassportMiddleware, jwtPassportMiddleware } = require('./user/auth-strategies');
 const { JWT_SECRET, JWT_EXPIRY } = require('./config.js');
@@ -61,7 +62,7 @@ router.get('/api/scores', function(req, res) {
 
 router.get('/api/predictions', function(req, res) {
     Predictions
-        .find()
+        .find({user: req.user})
         .then(scores => {
             res.json({
                 scores: scores.map(
@@ -142,7 +143,8 @@ router.post('/api/predictions', function(req, res) {
             HomeTeamName: req.body.HomeTeamName,
             AwayTeamScore: req.body.AwayTeamScore,
             HomeTeamScore: req.body.HomeTeamScore,
-            Week: req.body.Week
+            Week: req.body.Week,
+            user: req.body.user,
         })
         .then(scores => res.status(201).json(scores.serialize()))
         .catch(err => {

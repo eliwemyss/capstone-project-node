@@ -22,7 +22,7 @@ var predictionSchema = mongoose.Schema({
 		type: Number
 	},
 	user: {
-		type: String
+		type: mongoose.Schema.Types.ObjectId, ref: 'User'
 	}
 })
 
