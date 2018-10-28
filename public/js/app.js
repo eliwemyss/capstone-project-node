@@ -156,7 +156,7 @@ function displayUserFeed(data) {
 				      <td>${data.scores[i].HomeTeamName}</td>
       				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>
       				  <td>${data.scores[i].Week}</td>
-      				  <td><a href="#" class="edit" data-id="${data.scores[i].id}">Edit</a> <a href="#" class="delete" data-id="${data.scores[i].id}">Delete</a></td>
+      				  <td><a href="#" class="edit" data-id="${data.scores[i].id}"><button class="edit" type="submit">Edit</button></a> <a href="#" class="delete" data-id="${data.scores[i].id}"><button class="delete" type="submit">Delete</button></a></td>
     				</tr>
 				`
 			}
@@ -184,11 +184,25 @@ function deletePrediction() {
 	})
 }
 
-function displayEdit() {
-	$('.edit').on('click', function(event) {
 
-	}
-}
+// $("#dialog").dialog({
+//     autoOpen: false,
+//     show: {
+//         effect: "blind",
+//         duration: 1000
+//     },
+//     hide: {
+//         effect: "none",
+//         duration: 1000
+//     }
+// });
+
+// //Open it when #opener is clicked
+// $("dialog").on('click', function () {
+//     $("#dialog").dialog("open");
+// });
+
+
 
 function logout() {
     $('.logout').on('click', () => {
@@ -201,6 +215,7 @@ function logout() {
 
 $(getToken);
 $(postPrediction);
+// $(displayEdit)
 $(getUserPredictions);
 $(deletePrediction);
 $(logout);
