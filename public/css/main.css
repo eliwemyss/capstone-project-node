@@ -8,13 +8,20 @@ body {
   margin: 0;
   height: 100vh;
   width: 100vw;
-  background-image: url('/images/field.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
 }
 
+.hero-img {
+    background-image: url('/images/field.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+    margin: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
 
 .navbar {
   background-color: #313639;
@@ -71,16 +78,53 @@ display: inline-block;
   margin: 10px;
 }
 
+.main-container {
+  width: 100%;
+  margin-top: 40px;
+  background-color: white;
+}
+
+.descriptcontainer {
+  min-height: 200px;
+  padding: 50px 20% 0 20%;
+  
+}
+
+.description-img {
+  width: 20%;
+  margin: auto;
+  height: auto;
+}
+
+.description-text {
+  width: 60%;
+  font-size: 1.8em;
+  font-weight: 300;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
 .dropdown {
   text-align: center;
   vertical-align: middle;
   padding-top: 50px;
   width: 
 }
+
+#matchup {
+  width: 365px;
+}
+
 .score-form {
 	text-align: center;
-
-	padding-top: 100px;
 }
 
 .selected-scores {
@@ -88,20 +132,16 @@ display: inline-block;
   display: block;
 }
 
-.input-container {
-/*    background-color: grey;
-    opacity: 0.8;*/
-    margin-left: 25%;
-    margin-top: 50px;
-    width: 50%;
-    height: 50px;
-}
-
-
-.posted-scores {
+.selected-container {
   text-align: center;
-  padding-top: 150px;
+  margin-left: 25%;
+  margin-top: 50px;
+  width: 50%;
+  height: 50px;
 }
+
+
+
 
 
 table.score-table {
