@@ -1,5 +1,5 @@
 function getToken() {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('jwtToken');
     if (!token) {
         return window.location.href = '/login.html';
     } return token;

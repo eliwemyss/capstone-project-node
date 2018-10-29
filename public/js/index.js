@@ -1,3 +1,8 @@
+function getUsername() {
+    const username = sessionStorage.getItem('username')
+    $('.username').html(username)
+}
+
 function login() {
     $('.login').submit((event) => {
         event.preventDefault();
@@ -11,12 +16,14 @@ function login() {
             data: JSON.stringify(data),
             success: (response) => {
                 alert('Login succesful, redirecting you to homepage ...');
-                sessionStorage.setItem('token', response.token);
+
+                sessionStorage.setItem('jwtToken', response.jwtToken);
+                sessionStorage.setItem('username', response.user.username)
                 location.href = '/main.html';
             },
 
             error: (err) => {
-                alert('Usernamer or password does not match!')
+                alert('Username or password does not match!')
             },
 
         });
@@ -24,11 +31,7 @@ function login() {
 }
 
 
-function selectLogin() {
-    $('.landing').on('click', 'button.SelectLogin', () => {
-        location.href = '/login.html';
-    });
-}
+
 
 
 function submitNew() {
@@ -61,4 +64,4 @@ function submitNew() {
 
 $(login);
 $(submitNew);
-$(selectLogin);
+$(getUsername)

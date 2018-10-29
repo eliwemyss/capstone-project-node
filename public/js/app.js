@@ -7,12 +7,16 @@
 
 
 function getToken() {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('jwtToken');
     if (!token) {
         return window.location.href = '/login.html';
     } return token;
 }
 
+function getUsername() {
+	const username = sessionStorage.getItem('username')
+	console.log(username)
+}
 
 function getWeeklyMatchups(data) {
 	let week = '';
@@ -33,7 +37,6 @@ function getWeeklyMatchups(data) {
 			Authorization: `Bearer ${token}`,
 		},
 		success: function(data) {
-			$('.username').html()
 		console.log(data)
 			let gameData = weekDropdown(data)
 			$('#matchup').html(gameData)
@@ -114,6 +117,7 @@ function postPrediction() {
   			HomeTeamName: `${homeTeam}`,
   			HomeTeamScore: `${home}`,
   			Week: $('#week').val()
+
   		};
 
   		$('.away-table').append(`${awayTeam}`)
@@ -135,7 +139,7 @@ function postPrediction() {
 				      <td>${data.HomeTeamName}</td>
       				  <td>${data.AwayTeamScore} - ${data.HomeTeamScore}</td>
       				  <td>${data.Week}</td>
-      				  <td><a href="#" class="edit" data-id="${data.id}">Edit</a> <a href="#" class="delete" data-id="${data.id}">Delete</a></td>
+      				  <td><a href="#" class="edit" data-id="${data.id}"><button class="edit" type="submit">Edit</button></a> <a href="#" class="delete" data-id="${data.id}"><button class="delete" type="submit">Delete</button></a></td>
     				</tr>
 				`)
   			}
