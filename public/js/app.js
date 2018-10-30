@@ -1,10 +1,7 @@
+const user = sessionStorage.getItem('user');
+const username = sessionStorage.getItem('username')
 
-// function parseJwt(token) {
-//     const base64Url = token.split('.')[1];
-//     const base64 = base64Url.replace('-', '+').replace('_', '/');
-//     return JSON.parse(window.atob(base64));
-// }
-
+console.log(username)
 
 function getToken() {
     const token = sessionStorage.getItem('jwtToken');
@@ -87,7 +84,7 @@ function getUserPredictions() {
 	const token = getToken();
 	$.ajax({
 		type: 'GET',
-		url: '/api/predictions',
+		url: `/api/predictions/user/${user}`,
 		headers: {
 			Authorization: `Bearer ${token}`
 		},
@@ -116,7 +113,9 @@ function postPrediction() {
   			AwayTeamScore: `${away}`,
   			HomeTeamName: `${homeTeam}`,
   			HomeTeamScore: `${home}`,
-  			Week: $('#week').val()
+  			Week: $('#week').val(),
+  			user: user,
+  			username: username
 
   		};
 

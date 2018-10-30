@@ -26,7 +26,6 @@ function getFeed() {
 			let feedData = displayFeed(data);
 			$('.scores-feed').html(feedData)
 
-
 		}
 		})
 	})
@@ -40,7 +39,9 @@ function displayFeed(data) {
 					<tr>
 				      <td>${data.scores[i].AwayTeamName}</td>
 				      <td>${data.scores[i].HomeTeamName}</td>
+				      <td>${data.scores[i].Week}</td>
       				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>
+      				  <td>${data.scores[i].username}</td>
     				</tr>
 				`
 			}

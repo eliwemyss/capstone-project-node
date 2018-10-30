@@ -23,6 +23,9 @@ var predictionSchema = mongoose.Schema({
 	},
 	user: {
 		type: mongoose.Schema.Types.ObjectId, ref: 'User'
+	},
+	username: {
+		type: String
 	}
 })
 
@@ -34,6 +37,7 @@ predictionSchema.methods.serialize = function() {
 		AwayTeamScore: this.AwayTeamScore,
 		HomeTeamScore: this.HomeTeamScore,
 		user: this.user,
+		username: this.username,
 		Week: this.Week
 	}
 }

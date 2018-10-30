@@ -23,6 +23,7 @@ app.use(express.json());
 const router = express.Router();
 
 
+let user;
 
 function createJwtToken(user) {
     return jwt.sign({ user }, JWT_SECRET, {
@@ -62,7 +63,7 @@ router.get('/api/scores', function(req, res) {
 
 router.get('/api/predictions', function(req, res) {
     Predictions
-        .find({user: req.user})
+        .find()
         .then(scores => {
             res.json({
                 scores: scores.map(
@@ -85,6 +86,8 @@ router.get('/api/predictions/:id', function(req, res) {
             res.status(500).json({ error: 'something not working'})
         });
 });
+
+
 
 router.get('/api/scores/week/:id', function(req, res) {
     
@@ -145,6 +148,7 @@ router.post('/api/predictions', function(req, res) {
             HomeTeamScore: req.body.HomeTeamScore,
             Week: req.body.Week,
             user: req.body.user,
+            username: req.body.username
         })
         .then(scores => res.status(201).json(scores.serialize()))
         .catch(err => {
