@@ -71,7 +71,7 @@ describe('API resource', function() {
         .get('/api/predictions')
         .then(_res => {
           res = _res;
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(401);
     });
 });
     it('should return predictions with right fields', function () {
