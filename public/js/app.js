@@ -3,6 +3,8 @@ const username = sessionStorage.getItem('username')
 
 console.log(username)
 
+let editId = ''
+
 function getToken() {
     const token = sessionStorage.getItem('jwtToken');
     if (!token) {
@@ -84,7 +86,7 @@ function getUserPredictions() {
 	const token = getToken();
 	$.ajax({
 		type: 'GET',
-		url: `/api/predictions/user/${user}`,
+		url: '/api/predictions',
 		headers: {
 			Authorization: `Bearer ${token}`
 		},
@@ -138,7 +140,7 @@ function postPrediction() {
 				      <td>${data.HomeTeamName}</td>
       				  <td>${data.AwayTeamScore} - ${data.HomeTeamScore}</td>
       				  <td>${data.Week}</td>
-      				  <td><a href="#" class="edit" data-id="${data.id}"><button class="edit" type="submit">Edit</button></a> <a href="#" class="delete" data-id="${data.id}"><button class="delete" type="submit">Delete</button></a></td>
+      				  <td><a href="#" class="edit" data-id="${data.id}"><i class="fas fa-edit"></i></a> <a href="#" class="delete" data-id="${data.id}"><i class="fas fa-trash"></a></td>
     				</tr>
 				`)
   			}
@@ -159,7 +161,7 @@ function displayUserFeed(data) {
 				      <td>${data.scores[i].HomeTeamName}</td>
       				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>
       				  <td>${data.scores[i].Week}</td>
-      				  <td><a href="#" class="edit" data-id="${data.scores[i].id}"><button class="edit" type="submit">Edit</button></a> <a href="#" class="delete" data-id="${data.scores[i].id}"><button class="delete" type="submit">Delete</button></a></td>
+      				  <td><a href="#" class="edit" data-id="${data.scores[i].id}"><i class="fas fa-edit"></i></a> <a href="#" class="delete" data-id="${data.scores[i].id}"><i class="fas fa-trash"></i></a></td>
     				</tr>
 				`
 			}
@@ -188,24 +190,31 @@ function deletePrediction() {
 }
 
 
-// $("#dialog").dialog({
-//     autoOpen: false,
-//     show: {
-//         effect: "blind",
-//         duration: 1000
-//     },
-//     hide: {
-//         effect: "none",
-//         duration: 1000
-//     }
-// });
+function edit() {
+	const editButton = $(this);
+	const editId = $(this).attr('data-id');
+	$('#dialog-form').dialog({
+		width:600,
+		open: function dialogOpened() {
+			const formContext = $(this);
+			const tr = editButton.closest('tr');
+			const id = editId;
+			const away = tr.find('td:nth-child(1)');
+			const home = tr.find('td:nth-child(2)');
+			const awayValue = away.text();
+			const homeValue = home.text();
+			formContext.find('.away').text(awayValue)
+			formContext.find('.home').text(homeValue);
+			onFormSubmit(formContext, away, home, id);
+		},
+		close: function () {
+			$('#dialog-form form').off();
+		}
+	});
+}
 
-// //Open it when #opener is clicked
-// $("dialog").on('click', function () {
-//     $("#dialog").dialog("open");
-// });
 
-
+$('.score-table').on('click', '.edit', edit)
 
 function logout() {
     $('.logout').on('click', () => {
@@ -215,10 +224,33 @@ function logout() {
 }
 
 
+// function updateScore() {
+// 	$('.dialog-form').on('click', '.update', function{
+
+// 	})
+// 	let token = getToken();
+// 	let updatedScore = {
+// 		AwayTeamName: $('.away').val(),
+// 		HomeTeamName: $('.home').val(),
+// 		AwayTeamScore: $('.newAway').val(),
+// 		HomeTeamScore: $('.newHome').val()
+// 	}
+// 	ajax({
+// 		type:'PUT',
+// 		data: JSON.stringify(updatedScore),
+// 		headers: {
+// 			'Content-Type': 'application/json',
+//   			'Authorization': `Bearer ${token}`
+//   		},
+//   		success: function() {
+
+//   		}
+
+// 	})
+// }
 
 $(getToken);
 $(postPrediction);
-// $(displayEdit)
 $(getUserPredictions);
 $(deletePrediction);
 $(logout);

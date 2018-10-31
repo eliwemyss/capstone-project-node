@@ -61,9 +61,9 @@ router.get('/api/scores', function(req, res) {
         });
 });
 
-router.get('/api/predictions', function(req, res) {
+router.get('/api/predictions', jwtPassportMiddleware, function(req, res) {
     Predictions
-        .find()
+        .find({ user: req.user.id })
         .then(scores => {
             res.json({
                 scores: scores.map(
@@ -77,7 +77,7 @@ router.get('/api/predictions', function(req, res) {
 });
 
 
-router.get('/api/predictions/:id', function(req, res) {
+router.get('/api/predictions/:id', jwtPassportMiddleware, function(req, res) {
     Predictions
         .findById(req.params.id)
         .then(scores => res.json(scores.serialize()))
@@ -89,7 +89,7 @@ router.get('/api/predictions/:id', function(req, res) {
 
 
 
-router.get('/api/scores/week/:id', function(req, res) {
+router.get('/api/scores/week/:id', jwtPassportMiddleware, function(req, res) {
     
     Scores
         .find({ 'Week': req.params.id})
@@ -107,7 +107,7 @@ router.get('/api/scores/week/:id', function(req, res) {
 
 });
 
-router.get('/api/predictions/week/:id', function(req, res) {
+router.get('/api/predictions/week/:id', jwtPassportMiddleware, function(req, res) {
     
     Predictions
         .find({ 'Week': req.params.id})
@@ -126,7 +126,7 @@ router.get('/api/predictions/week/:id', function(req, res) {
 });
 
 
-router.post('/api/predictions', function(req, res) {
+router.post('/api/predictions', jwtPassportMiddleware, function(req, res) {
     const requiredFields = ['AwayTeamName', 'HomeTeamName', 'AwayTeamScore', 'HomeTeamScore', 'Week']
 
     for ( let i = 0; i < requiredFields.length; i++) {
@@ -147,7 +147,7 @@ router.post('/api/predictions', function(req, res) {
             AwayTeamScore: req.body.AwayTeamScore,
             HomeTeamScore: req.body.HomeTeamScore,
             Week: req.body.Week,
-            user: req.body.user,
+            user: req.user.id,
             username: req.body.username
         })
         .then(scores => res.status(201).json(scores.serialize()))

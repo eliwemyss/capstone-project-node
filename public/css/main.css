@@ -28,6 +28,7 @@ body {
 .navbar {
   background-color: #313639;
   color: white;
+  line-height: 0;
 
 }
 
@@ -37,7 +38,7 @@ body {
 
 .navbar li{
 display: inline-block;
-
+padding-right: 10px;
 
 }
 
@@ -92,7 +93,7 @@ display: inline-block;
 
 .descriptcontainer {
   min-height: 200px;
-  padding: 50px 20% 0 20%;
+  padding: 50px 20% 50px 20%;
   
 }
 
@@ -145,12 +146,59 @@ display: inline-block;
   width: 50%;
   height: 50px;
 }
-
-
-#dialog {
-  background-color: blue;
+.fa-edit, .fa-trash {
+  margin-right: 10px;
+  color: black;
 }
 
+.table-container {
+  width: 70%;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#dialog-form {
+  display: none;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #D1DEDE;
+}
+
+.modal {
+  text-align: center;
+  padding: 10px;
+}
+.ui-dialog .ui-dialog-titlebar {
+  padding: .4em 1em;
+  position: relative;
+  background-color: #01BAEF;
+  
+  font-size: 18px;
+  text-align: center;
+  line-height: 3;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.update{
+   width: 100%;
+    background-color: #241b1f;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display:inline-block;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.home, .away {
+  display: block;
+}
+.ui-button {
+  float: right;
+  margin: 10px auto auto 0;
+}
 
 table.score-table {
   width: 100%;
@@ -173,8 +221,6 @@ table.score-table thead {
   background-color: #ffcc00;
 }
 
-
-
-.feed-results {
+td {
   text-align: center;
 }
