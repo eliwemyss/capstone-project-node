@@ -198,14 +198,13 @@ function edit() {
 		open: function dialogOpened() {
 			const formContext = $(this);
 			const tr = editButton.closest('tr');
-			const id = editId;
-			$('.data').val(editId)
+			const id = $('input[name=edit]').val(editId)
 			const away = tr.find('td:nth-child(1)');
 			const home = tr.find('td:nth-child(2)');
 			const awayValue = away.text();
 			const homeValue = home.text();
-			formContext.find('.away').text(awayValue)
-			formContext.find('.home').text(homeValue);
+			formContext.find('.uAway').text(awayValue)
+			formContext.find('.uHome').text(homeValue);
 			
 		},
 		close: function () {
@@ -227,15 +226,15 @@ function logout() {
 
 function updateScore() {
 	$('.dialog-form').on('click', '.update', function() {
- 	})
 	let token = getToken();
-	let updateId = $('.data').val()
+	let updateId = $('input[name=edit]').val();
 	console.log(updateId)
-	let updatedScore = {
-		AwayTeamName: $('.away').val(),
-		HomeTeamName: $('.home').val(),
-		AwayTeamScore: $('.newAway').val(),
-		HomeTeamScore: $('.newHome').val()
+	let scoreAway = $('.newAway').val();
+	let scoreHome = $('.newHome').val();
+
+	const updatedScore = {
+		AwayTeamScore: `${scoreAway}`,
+		HomeTeamScore: `${scoreHome}`
 	}
 	$.ajax({
 		type:'PUT',
@@ -246,9 +245,9 @@ function updateScore() {
   			'Authorization': `Bearer ${token}`
   		},
   		success: function() {
-
+  			window.location.href = '/main.html'
   		}
-
+  	})
 	})
 }
 
