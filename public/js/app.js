@@ -199,13 +199,14 @@ function edit() {
 			const formContext = $(this);
 			const tr = editButton.closest('tr');
 			const id = editId;
+			$('.data').val(editId)
 			const away = tr.find('td:nth-child(1)');
 			const home = tr.find('td:nth-child(2)');
 			const awayValue = away.text();
 			const homeValue = home.text();
 			formContext.find('.away').text(awayValue)
 			formContext.find('.home').text(homeValue);
-			onFormSubmit(formContext, away, home, id);
+			
 		},
 		close: function () {
 			$('#dialog-form form').off();
@@ -224,35 +225,38 @@ function logout() {
 }
 
 
-// function updateScore() {
-// 	$('.dialog-form').on('click', '.update', function{
+function updateScore() {
+	$('.dialog-form').on('click', '.update', function() {
+ 	})
+	let token = getToken();
+	let updateId = $('.data').val()
+	console.log(updateId)
+	let updatedScore = {
+		AwayTeamName: $('.away').val(),
+		HomeTeamName: $('.home').val(),
+		AwayTeamScore: $('.newAway').val(),
+		HomeTeamScore: $('.newHome').val()
+	}
+	$.ajax({
+		type:'PUT',
+		data: JSON.stringify(updatedScore),
+		url: `/api/predictions/${updateId}`,
+		headers: {
+			'Content-Type': 'application/json',
+  			'Authorization': `Bearer ${token}`
+  		},
+  		success: function() {
 
-// 	})
-// 	let token = getToken();
-// 	let updatedScore = {
-// 		AwayTeamName: $('.away').val(),
-// 		HomeTeamName: $('.home').val(),
-// 		AwayTeamScore: $('.newAway').val(),
-// 		HomeTeamScore: $('.newHome').val()
-// 	}
-// 	ajax({
-// 		type:'PUT',
-// 		data: JSON.stringify(updatedScore),
-// 		headers: {
-// 			'Content-Type': 'application/json',
-//   			'Authorization': `Bearer ${token}`
-//   		},
-//   		success: function() {
+  		}
 
-//   		}
-
-// 	})
-// }
+	})
+}
 
 $(getToken);
 $(postPrediction);
 $(getUserPredictions);
 $(deletePrediction);
+$(updateScore)
 $(logout);
 $(getWeeklyMatchups);
 $(selectedMatchup);
