@@ -134,6 +134,10 @@ padding-right: 10px;
 	text-align: center;
 }
 
+input[type=text] {
+  width: 5%;
+}
+
 .selected-scores {
   text-align: center;
   display: block;
@@ -179,6 +183,13 @@ padding-right: 10px;
   border-top-right-radius: 10px;
 }
 
+.ui-dialog .ui-dialog-title {
+    margin: .1em 0;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .update{
    width: 100%;
     background-color: #241b1f;
@@ -193,7 +204,7 @@ padding-right: 10px;
 }
 
 .home, .away {
-  display: block;
+  display: inline-block;
 }
 .ui-button {
   float: right;
