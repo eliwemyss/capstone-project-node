@@ -6,13 +6,17 @@ html {
 body {
   font-family: sans-serif;
   margin: 0;
+  padding: 0;
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
 }
 
-
+header {
+  text-align: center;
+  font-size: 50px;
+}
 
 .hero-img {
   background-image: url('/images/field.jpg');
@@ -29,11 +33,16 @@ body {
   background-color: #313639;
   color: white;
   line-height: 0;
+  margin: 0;
+  position: fixed;
 
 }
 
 .navbar h1{
-  margin-left: 10px
+  margin-left: 10px;
+  width: 80%;
+  display: inline-flex;
+  white-space: nowrap;
 }
 
 .navbar li{
@@ -122,8 +131,7 @@ padding-right: 10px;
 .dropdown {
   text-align: center;
   vertical-align: middle;
-  padding-top: 50px;
-  width: 
+  padding-top: 100px;
 }
 
 #matchup {
@@ -131,12 +139,14 @@ padding-right: 10px;
 }
 
 .score-form {
-	text-align: center;
+  margin-right: 33%;
+  padding-bottom: 20px;
 }
 
 input[type=text] {
-  width: 5%;
+  width: 7%;
 }
+
 
 .selected-scores {
   text-align: center;
@@ -147,14 +157,18 @@ input[type=text] {
   text-align: center;
   margin-left: 25%;
   margin-top: 50px;
-  width: 50%;
   height: 50px;
 }
+
 .fa-edit, .fa-trash {
   margin-right: 10px;
   color: black;
 }
 
+.message {
+  color: red;
+  text-align: center;
+}
 .table-container {
   width: 70%;
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -170,6 +184,7 @@ input[type=text] {
 .modal {
   text-align: center;
   padding: 10px;
+  display: block;
 }
 .ui-dialog .ui-dialog-titlebar {
   padding: .4em 1em;
@@ -235,3 +250,59 @@ table.score-table thead {
 td {
   text-align: center;
 }
+
+ @media only screen and (max-width: 700px) {
+
+.selected-scores {
+  text-align: center;
+  display: block;
+}
+
+.selected-container {
+    margin-left: 0;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    height: 50px;
+    display: block;
+    word-break: break-word;
+}
+.score-form {
+  margin-left: 0;
+  display: block;
+  clear: both;
+  word-wrap: break-word;
+}
+
+
+button.submit {
+    width: 33%;
+    margin-left: 33%;
+    margin-top: 5px;
+}
+
+.navbar {
+  display: inline-block;
+}
+
+.navbar h1 {
+  margin-left: 0;
+}
+
+.navbar ul {
+  float: none;
+  margin-left: 0;
+}
+
+.description-img {
+    width: 50%;
+}
+
+.description-text {
+  width: 0; 
+  font-size: 1em; 
+  font-weight: 300; 
+  padding-top: 0; 
+  margin-top: 0; 
+}
+
+ }

@@ -22,9 +22,16 @@ function getFeed() {
 			Authorization: `Bearer ${token}`,
 		},
 		success: function(data) {
-			console.log(data.scores[0].AwayTeamName)
+			if (data.scores.length != 0){
 			let feedData = displayFeed(data);
 			$('.scores-feed').html(feedData)
+			$('.message').css('visibility', 'hidden')
+
+		}
+			else{
+				$('.message').html('<p>No predictions for this week</p>')
+				$('.table-results').css('visibility', 'hidden')
+			}
 
 		}
 		})
@@ -36,7 +43,7 @@ function displayFeed(data) {
 	let feed = '';
 	for(let i = 0; i < data.scores.length; i++) {
 				feed +=`
-					<tr>
+					<tr class="table-results">
 				      <td>${data.scores[i].AwayTeamName}</td>
 				      <td>${data.scores[i].HomeTeamName}</td>
       				  <td>${data.scores[i].AwayTeamScore} - ${data.scores[i].HomeTeamScore}</td>

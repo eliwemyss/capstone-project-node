@@ -91,7 +91,6 @@ function getUserPredictions() {
 			Authorization: `Bearer ${token}`
 		},
 		success: function(data) {
-			// const payloadData = parseJwt(token);
 			let userData = displayUserFeed(data);
 			$('tbody').html(userData)
 		}
@@ -194,7 +193,7 @@ function edit() {
 	const editButton = $(this);
 	const editId = $(this).attr('data-id');
 	$('#dialog-form').dialog({
-		width:600,
+		width:375,
 		open: function dialogOpened() {
 			const formContext = $(this);
 			const tr = editButton.closest('tr');
