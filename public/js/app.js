@@ -67,17 +67,15 @@ function selectedMatchup() {
 		teams = matchup.split('vs')
 
 		let predictions = `	
-		<div class="input-container">
 		<form class="score-form">	
-			<label>${teams[0]}</label><input type="text" name="score away" class="score-away">
-			<label>${teams[1]}</label><input type="text" name="score home" class="score-home">
+			<label>${teams[0]}</label><input type="number" name="score away" class="score-away">
+			<label>${teams[1]}</label><input type="number" name="score home" class="score-home">
 			<input type="hidden" name="away-team" class="away-team" value="${teams[0]}">
 			<input type="hidden" name="home-team" class="home-team" value="${teams[1]}">
 			<button class="submit">Submit</button>
-		</form>
-		</div>`
+		</form>`
 
-		$('.selected-scores').html(predictions)
+		$('.selected-container').html(predictions)
 		
 	})
 };
@@ -99,7 +97,7 @@ function getUserPredictions() {
 
 
 function postPrediction() {
-	$('.selected-scores').on('submit', '.score-form', function(event) {
+	$('.selected-container').on('submit', '.score-form', function(event) {
 		event.preventDefault();
  		const away = $('.score-away').val();
   		$('.score-away').val('')
@@ -193,7 +191,10 @@ function edit() {
 	const editButton = $(this);
 	const editId = $(this).attr('data-id');
 	$('#dialog-form').dialog({
-		width:375,
+		width: 'auto',
+		maxWidth: 600,
+		fluid: true,
+
 		open: function dialogOpened() {
 			const formContext = $(this);
 			const tr = editButton.closest('tr');

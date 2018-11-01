@@ -54,7 +54,11 @@ function submitNew() {
             },
 
             error: (err) => {
-
+                if(pass.length < 8){
+                    alert('Password must be at least 8 characters!')
+                } else {
+                    alert('Usename already taken!')
+                }
             },
 
         });

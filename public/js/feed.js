@@ -25,12 +25,9 @@ function getFeed() {
 			if (data.scores.length != 0){
 			let feedData = displayFeed(data);
 			$('.scores-feed').html(feedData)
-			$('.message').css('visibility', 'hidden')
-
 		}
 			else{
-				$('.message').html('<p>No predictions for this week</p>')
-				$('.table-results').css('visibility', 'hidden')
+				$('.scores-feed').html('')
 			}
 
 		}

@@ -139,25 +139,20 @@ padding-right: 10px;
 }
 
 .score-form {
-  margin-right: 33%;
-  padding-bottom: 20px;
+
 }
 
-input[type=text] {
-  width: 7%;
+input[type=number] {
+  width: 3%;
 }
 
 
-.selected-scores {
-  text-align: center;
-  display: block;
-}
 
 .selected-container {
   text-align: center;
-  margin-left: 25%;
   margin-top: 50px;
   height: 50px;
+  padding-bottom: 20px;
 }
 
 .fa-edit, .fa-trash {
@@ -170,15 +165,16 @@ input[type=text] {
   text-align: center;
 }
 .table-container {
-  width: 70%;
+  width: 80%;
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  margin-left: auto;
+  margin-right: auto;
 }
+
 #dialog-form {
   display: none;
-  background-color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  background-color: #D1DEDE;
 }
 
 .modal {
@@ -205,22 +201,8 @@ input[type=text] {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.update{
-   width: 100%;
-    background-color: #241b1f;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display:inline-block;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
 
-.home, .away {
-  display: inline-block;
-}
+
 .ui-button {
   float: right;
   margin: 10px auto auto 0;
@@ -253,10 +235,7 @@ td {
 
  @media only screen and (max-width: 700px) {
 
-.selected-scores {
-  text-align: center;
-  display: block;
-}
+
 
 .selected-container {
     margin-left: 0;
@@ -266,17 +245,10 @@ td {
     display: block;
     word-break: break-word;
 }
-.score-form {
-  margin-left: 0;
-  display: block;
-  clear: both;
-  word-wrap: break-word;
-}
 
 
 button.submit {
     width: 33%;
-    margin-left: 33%;
     margin-top: 5px;
 }
 
@@ -304,5 +276,15 @@ button.submit {
   padding-top: 0; 
   margin-top: 0; 
 }
+
+input[type=number] {
+  width: 6%;
+}
+
+
+.table-container {
+  margin-left: 0;
+  box-shadow: none;
+  width: 100%;
 
  }
