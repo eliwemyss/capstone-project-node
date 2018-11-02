@@ -13,7 +13,6 @@ function getFeed() {
 		 selected = $(this).find('option:selected');
 		 week = selected.val();
 		const WEEK_URL = `api/predictions/week/${week}`;
-		console.log(WEEK_URL)
 
 		$.ajax({
 		type: 'GET',

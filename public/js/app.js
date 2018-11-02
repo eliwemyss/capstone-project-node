@@ -1,7 +1,6 @@
 const user = sessionStorage.getItem('user');
 const username = sessionStorage.getItem('username')
 
-console.log(username)
 
 let editId = ''
 
@@ -14,7 +13,7 @@ function getToken() {
 
 function getUsername() {
 	const username = sessionStorage.getItem('username')
-	console.log(username)
+
 }
 
 function getWeeklyMatchups(data) {
@@ -24,10 +23,9 @@ function getWeeklyMatchups(data) {
 	$('#week').change(function() {
 		selected = $(this).find('option:selected');
 		week = selected.val();
-		console.log('changing value to: ', week)
 
 		const WEEK_URL = `api/scores/week/${week}`;
-		console.log(WEEK_URL)
+
 
 		$.ajax({
 		type: 'GET',
@@ -36,7 +34,6 @@ function getWeeklyMatchups(data) {
 			Authorization: `Bearer ${token}`,
 		},
 		success: function(data) {
-		console.log(data)
 			let gameData = weekDropdown(data)
 			$('#matchup').html(gameData)
 		}
@@ -171,7 +168,7 @@ function deletePrediction() {
 	$('.user-post').on('click', '.delete', function() {
 		const token = getToken();
 		const teamid = $(this).attr('data-id');
-		console.log(teamid)
+
 		$.ajax({
 			url: `/api/predictions/${teamid}`,
 			method: 'DELETE',
@@ -182,7 +179,7 @@ function deletePrediction() {
 				window.location.href = '/main.html';
 			},
 			error: (err) => {
-				console.log(err);
+				alert('There was an error deleting your prediction...')
 			}
 		})
 	})
@@ -230,7 +227,6 @@ function updateScore() {
 	$('.dialog-form').on('click', '.update', function() {
 	let token = getToken();
 	let updateId = $('input[name=edit]').val();
-	console.log(updateId)
 	let scoreAway = $('.newAway').val();
 	let scoreHome = $('.newHome').val();
 
