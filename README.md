@@ -2,9 +2,9 @@
 
 ## Predict Scores for Upcoming NCAA Football Games!
 
-## Visit: 
+## Visit:
+# Test Account
 [Visit Live Site](https://safe-river-93282.herokuapp.com/ )
-#Test User
 Username: test
 
 Password: test1234
