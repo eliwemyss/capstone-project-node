@@ -139,12 +139,8 @@ padding-right: 10px;
 }
 
 .score-form {
-
 }
 
-input[type=number] {
-  width: 6%;
-}
 
 
 
@@ -159,10 +155,8 @@ input[type=number] {
   margin-right: 10px;
   color: black;
 }
-
 .message {
-  color: red;
-  text-align: center;
+  visibility: hidden;
 }
 .table-container {
   width: 80%;

@@ -131,6 +131,7 @@ function postPrediction() {
   				'Authorization': `Bearer ${token}`
   			},
   			success: function(data) {
+
   				$('.user-post').append(`
 					<tr>
 				      <td>${data.AwayTeamName}</td>
@@ -140,6 +141,7 @@ function postPrediction() {
       				  <td><a href="#" class="edit" data-id="${data.id}"><i class="fas fa-edit"></i></a> <a href="#" class="delete" data-id="${data.id}"><i class="fas fa-trash"></a></td>
     				</tr>
 				`)
+  			
   			}
 
   		})
