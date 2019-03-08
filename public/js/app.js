@@ -24,14 +24,15 @@ function getWeeklyMatchups(data) {
 		selected = $(this).find('option:selected');
 		week = selected.val();
 
-		const WEEK_URL = `api/scores/week/${week}`;
+		const WEEK_URL = `https://api.fantasydata.net/v3/cfb/scores/json/GamesByWeek/2019/${week}`;
+		console.log(WEEK_URL)
 
 
 		$.ajax({
 		type: 'GET',
 		url: WEEK_URL,
 		headers: {
-			Authorization: `Bearer ${token}`,
+			"Ocp-Apim-Subscription-Key": "80dbc7beb0db44ad829b53b0193a5bf2"
 		},
 		success: function(data) {
 			let gameData = weekDropdown(data)
@@ -44,9 +45,9 @@ function getWeeklyMatchups(data) {
 
 function weekDropdown(data) {
 	let results = '<option value selected="selected">Choose Matchup</option>';
-	for(let i = 0; data.scores.length > i; i++) {
+	for(let i = 0; data.length > i; i++) {
 		results += `
-		<option value="${[i]}">${data.scores[i].AwayTeamName} vs ${data.scores[i].HomeTeamName}</option>
+		<option value="${[i]}">${data[i].AwayTeamName} vs ${data[i].HomeTeamName}</option>
 		`
 	
 	}
